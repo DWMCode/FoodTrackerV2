@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".FoodListDetailActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/activity_food_List_detail_item_name"
+        android:id="@+id/lblItemName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:background="#467ee5" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtItemName"
+        android:layout_below="@+id/lblItemName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/lblItemName"
+        android:layout_alignEnd="@+id/lblItemName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/activity_food_List_detail_fruit"
+        android:id="@+id/lblFruitCalories"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:background="#467ee5"
+        android:layout_below="@+id/txtItemName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/txtItemName"
+        android:layout_alignEnd="@+id/txtItemName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtFruitCalories"
+        android:layout_below="@+id/lblFruitCalories"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/lblFruitCalories"
+        android:layout_alignEnd="@+id/lblFruitCalories" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/activity_food_List_detail_grain"
+        android:id="@+id/lblGrainCalories"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:background="#467ee5"
+        android:layout_below="@+id/txtFruitCalories"
+        android:layout_alignRight="@+id/txtFruitCalories"
+        android:layout_alignEnd="@+id/txtFruitCalories"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtGrainCalories"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lblGrainCalories"
+        android:layout_alignRight="@+id/txtFruitCalories"
+        android:layout_alignEnd="@+id/txtFruitCalories"
+        android:inputType="text"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/activity_food_List_detail_vegetable"
+        android:id="@+id/lblVegetableCalories"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:background="#467ee5"
+        android:layout_below="@+id/txtGrainCalories"
+        android:layout_alignRight="@+id/txtGrainCalories"
+        android:layout_alignEnd="@+id/txtGrainCalories"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtVegetableCalories"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lblVegetableCalories"
+        android:layout_alignRight="@+id/txtGrainCalories"
+        android:layout_alignEnd="@+id/txtGrainCalories"
+        android:inputType="text"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/activity_food_List_detail_protein"
+        android:id="@+id/lblProteinCalories"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:background="#467ee5"
+        android:layout_below="@+id/txtVegetableCalories"
+        android:layout_alignRight="@+id/txtVegetableCalories"
+        android:layout_alignEnd="@+id/txtVegetableCalories"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtProteinCalories"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lblProteinCalories"
+        android:layout_alignRight="@+id/txtVegetableCalories"
+        android:layout_alignEnd="@+id/txtVegetableCalories"
+        android:inputType="text"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/activity_food_List_detail_dairy"
+        android:id="@+id/lblDailyCalories"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:background="#467ee5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtProteinCalories"
+        android:layout_alignRight="@+id/txtProteinCalories"
+        android:layout_alignEnd="@+id/txtProteinCalories" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDairyCalories"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lblDailyCalories"
+        android:layout_alignRight="@+id/txtProteinCalories"
+        android:layout_alignEnd="@+id/txtProteinCalories" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_food_List_detail_update"
+        android:id="@+id/btnUpdateItem"
+        android:layout_below="@+id/txtDairyCalories"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#39966c"
+        android:textColor="#ffffff" />
+
+</RelativeLayout>

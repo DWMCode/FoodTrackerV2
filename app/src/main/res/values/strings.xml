@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FoodTrackerV2</string>
+    <string name="home_title">recorder</string>
+    <string name="wrench_title">food list</string>
+    <string name="recorder_title">ADD NEW FOOD ITEM</string>
+    <string name="activity_food_List_title">ADD NEW FOOD ITEM</string>
+    <string name="activity_food_List_detail_item_name">Item Name</string>
+    <string name="activity_food_List_detail_fruit">FRUIT CALORIES</string>
+    <string name="activity_food_List_detail_grain">GRAIN CALORIES</string>
+    <string name="activity_food_List_detail_vegetable">VEGETABLE CALORIES</string>
+    <string name="activity_food_List_detail_protein">PROTEIN CALORIES</string>
+    <string name="activity_food_List_detail_dairy">DAIRY CALORIES</string>
+    <string name="activity_food_List_detail_update">UPDATE</string>
+    <string name="activity_recorder_new_item">Enter New Foor Item</string>
+    <string name="activity_recorder_new_item_hint">enter item here..</string>
+</resources>
