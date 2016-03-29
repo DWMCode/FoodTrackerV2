@@ -1,0 +1,2 @@
+# FoodTrackerV2
+FoodTracker is a “One Tap” calorie and food choice recorder app designed for people on the move. One of the big challenges with keeping track of what you eat/drink is taking the time to write it down when you are on the go and then compiling all the notes later for a report. FoodTracker would be ideal for this purpose because the “One Tap” feature eliminates the time burden, built in reports provide instant feedback and alert thresholds help manage daily food group choices. 
