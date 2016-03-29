@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home_icon"
-        android:icon="@drawable/ic_home_black"
-        android:title="@string/home_title"
+        android:id="@+id/menu_recorder"
+        android:title="@string/recorder_menu"
         android:orderInCategory="100"
         />
     <item
-        android:id="@+id/wrench_icon"
-        android:icon="@drawable/ic_build_black"
-        android:title="@string/wrench_title"
+        android:id="@+id/menu_food_list"
+        android:title="@string/food_list_menu"
         android:orderInCategory="200"
+        />
+    <item
+        android:id="@+id/menu_alert"
+        android:title="@string/alert_title_menu"
+        android:orderInCategory="300"
+        />
+    <item
+        android:id="@+id/menu_reporting"
+        android:title="@string/reporting_title_menu"
+        android:orderInCategory="300"
         />
 </menu>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.riansousa.foodtrackerv2.ReportingActivity"
+    android:id="@+id/rlReporting">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/activity_reporting_label_report_title"
+        android:id="@+id/lblReportTitle"
+        android:textColor="#ffffff"
+        android:textAlignment="center"
+        android:background="#467ee5" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:weightSum="1"
+        android:layout_below="@+id/lblReportTitle"
+        android:id="@+id/llReportDate">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/activity_reporting_label_enter_date"
+            android:id="@+id/lblEnterDate" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtReportDate"
+            android:layout_weight="0.20"
+            android:hint="@string/activity_reporting_label_hint_date"
+            android:paddingLeft="5dp"
+            android:textAlignment="center"
+            android:inputType="date" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibCalendar"
+            android:src="@drawable/ic_date_range_black"
+            android:layout_gravity="bottom"
+            android:foregroundGravity="bottom"
+            android:contentDescription="@string/activity_reporting_label_hint_calendar" />
+
+        <Button
+            android:layout_width="59dp"
+            android:layout_height="37dp"
+            android:text="@string/activity_reporting_label_go"
+            android:id="@+id/btnReportGo"
+            android:textAlignment="center"
+            android:layout_gravity="bottom"
+            android:gravity="top"
+            android:contentDescription="@string/activity_reporting_label_hint_go" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llReportDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:useDefaultMargins="true"
+        android:id="@+id/glCalories">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/activity_reporting_label_daily_max"
+            android:id="@+id/lblDailyMax"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <EditText
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtDailyMax"
+            android:layout_row="0"
+            android:layout_column="10"
+            android:editable="false"
+            android:enabled="true"
+            android:hint="@string/activity_reporting_label_hint_daily"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/lblTotalCalories"
+            android:text="@string/activity_reporting_label_total_cal"
+            android:layout_row="1"
+            android:layout_column="0" />
+
+        <EditText
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTotalCalories"
+            android:layout_row="1"
+            android:layout_column="10"
+            android:enabled="true"
+            android:hint="@string/activity_reporting_label_hint_total"
+            android:editable="false"
+            android:inputType="number" />
+    </GridLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:useDefaultMargins="false"
+        android:id="@+id/glReportLabel"
+        android:layout_below="@+id/glCalories"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/activity_reporting_label_time"
+            android:id="@+id/lblTime"
+            android:width="45dp"
+            android:textStyle="bold"
+            android:layout_row="0"
+            android:layout_column="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/activity_reporting_label_group"
+            android:id="@+id/lblGroup"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:textStyle="bold"
+            android:width="55dp"
+            android:paddingRight="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/activity_reporting_label_item"
+            android:id="@+id/lblItem"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:textStyle="bold"
+            android:width="90dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/activity_reporting_label_portion"
+            android:id="@+id/lblPortion"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:textStyle="bold"
+            android:paddingRight="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/activity_reporting_label_calories"
+            android:id="@+id/lblCalories"
+            android:layout_row="0"
+            android:layout_column="4"
+            android:textStyle="bold" />
+    </GridLayout>
+
+    <GridView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gvReportResults"
+        android:numColumns="5"
+        android:layout_below="@+id/glReportLabel"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <FrameLayout
+        android:id="@+id/flNoData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/gvReportResults" />
+
+</RelativeLayout>

@@ -27,7 +27,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listFood"
+        android:id="@+id/listMainItems"
         android:layout_below="@+id/btnAddNew"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

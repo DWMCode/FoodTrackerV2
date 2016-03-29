@@ -4,12 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/activity_recorder_new_item"
-        android:id="@+id/textView" />
+
     <EditText
         android:id="@+id/txtNewItem"
         android:layout_width="fill_parent"
