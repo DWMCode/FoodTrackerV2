@@ -9,28 +9,43 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RecorderActivity">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/recorder_title"
-        android:id="@+id/btnAddNew"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/main_activity_instructions"
+        android:id="@+id/lblMainInstructions"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textColor="#ffffff"
-        android:background="#39966c"
-        android:textColorHighlight="#ebc610"
-        android:singleLine="true" />
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        style="@style/Title_Colors" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listMainItems"
-        android:layout_below="@+id/btnAddNew"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp"
-        android:scrollIndicators="none" />
+        android:scrollIndicators="none"
+        android:layout_below="@+id/lblMainInstructions"
+        android:layout_above="@+id/btnAddNew"
+        android:layout_marginBottom="5dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/recorder_title"
+        android:id="@+id/btnAddNew"
+        android:textColor="#ffffff"
+        android:background="#39966c"
+        android:singleLine="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

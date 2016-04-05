@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">FoodTrackerV2</string>
-    <string name="recorder_menu">Home</string>
-    <string name="food_list_menu">Food Profile</string>
-    <string name="alert_title_menu">My Alerts</string>
-    <string name="reporting_title_menu">My Reports</string>
+    <string name="menu_recorder">Home</string>
+    <string name="menu_food_profile">Food Profile</string>
+    <string name="menu_my_alerts">My Alerts</string>
+    <string name="menu_my_preferences">My Preferences</string>
+    <string name="menu_my_reports">My Reports</string>
     <string name="recorder_title">ADD NEW FOOD ITEM</string>
+    <string name="main_activity_instructions">Click List Item to Record</string>
+    <string name="activity_food_list">Click List Item to Update Profile</string>
     <string name="activity_food_List_title_add">ADD NEW FOOD ITEM</string>
     <string name="activity_food_List_title_update">UPDATE FOOD ITEM</string>
     <string name="activity_food_List_detail_item_name">Item Name</string>
@@ -30,8 +33,6 @@
     <string name="activity_alert_label_max">Max Daily Calories</string>
     <string name="activity_alert_label_title">MY ALERTS</string>
     <string name="activity_alert_label_update">UPDATE</string>
-    <string name="activity_food_list_new">NEW ITEMS</string>
-    <string name="activity_food_list_existing">EXISTING ITEMS</string>
     <string name="activity_reporting_label_report_title">REPORTING</string>
     <string name="activity_reporting_label_enter_date">Enter a Date</string>
     <string name="activity_reporting_label_go">GO</string>
@@ -48,4 +49,17 @@
     <string name="activity_reporting_label_hint_calendar">Click for Calendar</string>
     <string name="activity_reporting_label_hint_go">Click to Run Report</string>
     <string name="text_fragment">No Data for Report.</string>
+    <string name="button_delete">DELETE</string>
+    <string name="button_update">UPDATE</string>
+    <string name="pref_daily_max">Daily Maximum Calories Exceeded Message</string>
+    <string name="pref_fruit_max">Daily Fruit Max Exceeded Message</string>
+    <string name="pref_fruit_min">Daily Fruit Min Exceeded Message</string>
+    <string name="pref_grain_max">Daily Grain Max Exceeded Message</string>
+    <string name="pref_grain_min">Daily Grain Min Exceeded Message</string>
+    <string name="pref_protein_max">Daily Protein Max Exceeded Message</string>
+    <string name="pref_protein_min">Daily Protein Min Exceeded Message</string>
+    <string name="pref_veg_max">Daily Vegetable Max Exceeded Message</string>
+    <string name="pref_veg_min">Daily Vegetable Min Exceeded Message</string>
+    <string name="pref_dairy_max">Daily Dairy Max Exceeded Message</string>
+    <string name="pref_dairy_min">Daily Dairy Min Exceeded Message</string>
 </resources>

@@ -17,17 +17,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import com.riansousa.foodtrackerv2.Logic.ErrorLog;
 import java.util.Calendar;
 
 /**
  * Class that handles all the code processing to support the activity_reporting view.
  */
-public class ReportingActivity extends AppCompatActivity {
+public class MyReportingActivity extends AppCompatActivity {
 
     /**
      * private global variables
      */
     private static final String TAG = "FoodTracker";
+    private ErrorLog _log = new ErrorLog();
     private Calendar calSelectDate;
     private EditText txtReportDate;
     private int day;
@@ -73,30 +75,38 @@ public class ReportingActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // research on switching between activity screens from
+        // http://stackoverflow.com/questions/17743094/how-to-switch-between-activities-screens-in-android
         switch(item.getItemId())
         {
-            case R.id.menu_food_list:
+            case R.id.menu_food_profile:
                 Log.i(TAG, "ReportingActivity - The food list icon was clicked");
                 // load food list screen
-                Intent foodListScreen = new Intent(getApplicationContext(), FoodListActivity.class);
+                Intent foodListScreen = new Intent(getApplicationContext(), FoodProfileListActivity.class);
                 startActivity(foodListScreen);
                 break;
             case R.id.menu_recorder:
-                Log.i(TAG, "ReportingActivity - The recorder icon was clicked");
-                // load food list screen
+                Log.i(TAG, "ReportingActivity - The main icon was clicked");
+                // load main screen
                 Intent recorder = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(recorder);
                 break;
-            case R.id.menu_alert:
+            case R.id.menu_my_alert:
                 Log.i(TAG, "ReportingActivity - The alert icon was clicked");
-                // load food list screen
-                Intent alert = new Intent(getApplicationContext(), AlertActivity.class);
+                // load alert screen
+                Intent alert = new Intent(getApplicationContext(), MyAlertActivity.class);
                 startActivity(alert);
                 break;
-            case R.id.menu_reporting:
+            case R.id.menu_my_preferences:
+                Log.i(TAG, "AlertActivity - The preferences icon was clicked");
+                // load my preferences screen
+                Intent preference = new Intent(getApplicationContext(), MyPreferencesActivity.class);
+                startActivity(preference);
+                break;
+            case R.id.menu_my_reports:
                 Log.i(TAG, "ReportingActivity - The reporting icon was clicked");
-                // load food list screen
-                Intent report = new Intent(getApplicationContext(), ReportingActivity.class);
+                // load reporting screen
+                Intent report = new Intent(getApplicationContext(), MyReportingActivity.class);
                 startActivity(report);
                 break;
         }
@@ -181,38 +191,38 @@ public class ReportingActivity extends AppCompatActivity {
      */
     private void initMain() {
         try {
-            // get an instance of the calendar object and set current time values
+            /** get an instance of the calendar object and set current time values */
             calSelectDate = Calendar.getInstance();
             day = calSelectDate.get(Calendar.DAY_OF_MONTH);
             month = calSelectDate.get(Calendar.MONTH);
             year = calSelectDate.get(Calendar.YEAR);
 
-            // set textbox with date
+            /** set textbox with date */
             txtReportDate = (EditText)findViewById(R.id.txtReportDate);
             txtReportDate.setText((month + 1) + "/" + day +"/" + year);
 
-            // instantiate image button object
+            /** instantiate image button object */
             ImageButton ibCal = (ImageButton) findViewById(R.id.ibCalendar);
 
-            // set event listener on button to handle click
+            /** set event listener on button to handle click */
             ibCal.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // handle click
+                    /** handle click */
                     Log.i(TAG, "ReportingActivity - Image Button Clicked");
-                    // launch pop up dialog for calendar
+                    /** launch pop up dialog for calendar */
                     PopCalendar();
                 }
             });
 
-            // instantiate image button object
+            /** instantiate image button object */
             Button btnGo = (Button) findViewById(R.id.btnReportGo);
 
-            // set event listener on button to handle click
+            /** set event listener on button to handle click */
             btnGo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // handle click
+                    /** handle click */
                     txtReportDate = (EditText) findViewById(R.id.txtReportDate);
                     Log.i(TAG, "ReportingActivity - Go Button Clicked - Report Date " + txtReportDate.getText());
                 }
@@ -222,8 +232,11 @@ public class ReportingActivity extends AppCompatActivity {
             getFragmentManager().beginTransaction().add(R.id.flNoData, new PlaceholderFragment()).commit();
 
         } catch(Exception e) {
-        Log.i(TAG, "ReportingActivity -Error:" + e.getMessage());
-    }
+            /** log to file */
+            _log.WriteError(getApplicationContext(), "ReportingActivity.initMain() - Error: " + e.getMessage());
+            /** log to console */
+            Log.i(TAG, "ReportingActivity.initMain() - Error: " + e.getMessage());
+        }
     }
 
     /**
@@ -247,7 +260,7 @@ public class ReportingActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         // handle the click
         public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
-            // set textbox with date
+            /** set textbox with date */
             txtReportDate = (EditText)findViewById(R.id.txtReportDate);
             txtReportDate.setText((selectedMonth + 1) + "/" + selectedDay +"/" + selectedYear);
         }
@@ -259,19 +272,19 @@ public class ReportingActivity extends AppCompatActivity {
      * This is adapted from the lecture notes Module 2, Section Fragment Example 1
      */
     public static class PlaceholderFragment extends Fragment {
-        // default constructor
+        /** default constructor */
         public PlaceholderFragment() {
         }
 
-        // method to invoke the text_fragment view and show the No Data message
+        /** method to invoke the text_fragment view and show the No Data message */
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
             View rootView = null;
-            // wrapped with try/catch for error reporting
+            /** wrapped with try/catch for error reporting */
             try {
                 rootView = inflater.inflate(R.layout.text_fragment, container, false);
             } catch(Exception e) {
-                Log.i(TAG, "ReportingActivity -Error:" + e.getMessage());
+                Log.i(TAG, "ReportingActivity.PlaceholderFragment() - Error: " + e.getMessage());
             }
             return rootView;
         }

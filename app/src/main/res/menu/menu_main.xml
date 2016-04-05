@@ -2,22 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_recorder"
-        android:title="@string/recorder_menu"
+        android:title="@string/menu_recorder"
         android:orderInCategory="100"
         />
     <item
-        android:id="@+id/menu_food_list"
-        android:title="@string/food_list_menu"
+        android:id="@+id/menu_food_profile"
+        android:title="@string/menu_food_profile"
         android:orderInCategory="200"
         />
     <item
-        android:id="@+id/menu_alert"
-        android:title="@string/alert_title_menu"
+        android:id="@+id/menu_my_alert"
+        android:title="@string/menu_my_alerts"
         android:orderInCategory="300"
         />
     <item
-        android:id="@+id/menu_reporting"
-        android:title="@string/reporting_title_menu"
-        android:orderInCategory="300"
+        android:id="@+id/menu_my_preferences"
+        android:title="@string/menu_my_preferences"
+        android:orderInCategory="400"
+        />
+    <item
+        android:id="@+id/menu_my_reports"
+        android:title="@string/menu_my_reports"
+        android:orderInCategory="500"
         />
 </menu>

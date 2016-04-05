@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.riansousa.foodtrackerv2">
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,9 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FoodListActivity" />
-        <activity android:name=".FoodListDetailActivity" />
-        <activity android:name=".AlertActivity" />
-        <activity android:name=".ReportingActivity" />
+        <activity android:name=".FoodProfileListActivity" />
+        <activity android:name=".FoodProfileDetailActivity" />
+        <activity android:name=".MyAlertActivity" />
+        <activity android:name=".MyReportingActivity" />
+        <activity android:name=".MyPreferencesActivity"></activity>
     </application>
+
 </manifest>

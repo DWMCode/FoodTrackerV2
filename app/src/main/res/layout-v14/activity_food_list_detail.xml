@@ -30,15 +30,18 @@
             android:textAlignment="center"
             android:textStyle="bold"
             android:paddingTop="3dp"
-            android:background="#5254e1"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            style="@style/Title_Colors" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtItemName"
             android:layout_gravity="center_horizontal"
-            android:inputType="text" />
+            android:inputType="text"
+            android:editable="false"
+            android:enabled="false"
+            android:textStyle="bold" />
 
         <GridLayout
             android:layout_width="fill_parent"
@@ -55,11 +58,11 @@
                 android:layout_row="0"
                 android:layout_column="0"
                 android:layout_columnSpan="2"
-                android:textColor="#5254e1"
                 android:paddingLeft="10dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:paddingRight="10dp" />
+                android:paddingRight="10dp"
+                style="@style/Label_Font" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,10 +72,10 @@
                 android:id="@+id/lblCalories"
                 android:layout_row="0"
                 android:layout_column="2"
-                android:textColor="#5254e1"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:paddingRight="5dp" />
+                android:paddingRight="5dp"
+                style="@style/Label_Font" />
 
             <TextView
                 android:layout_width="85dp"
@@ -82,9 +85,9 @@
                 android:id="@+id/lblPortion"
                 android:layout_row="0"
                 android:layout_column="3"
-                android:textColor="#5254e1"
                 android:paddingTop="3dp"
-                android:paddingBottom="3dp" />
+                android:paddingBottom="3dp"
+                style="@style/Label_Font" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -218,11 +221,30 @@
 
         </GridLayout>
 
-        <Button
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/activity_alert_label_update"
-            android:id="@+id/btnUpdateMyAlerts" />
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="@string/button_delete"
+                android:id="@+id/btnDeleteFoodItem"
+                android:background="#af4b4b"
+                android:textColor="#ffffff"
+                android:layout_marginRight="2dp" />
+
+            <Button
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="@string/button_update"
+                android:id="@+id/btnUpdateFoodItem"
+                android:background="#39966c"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
