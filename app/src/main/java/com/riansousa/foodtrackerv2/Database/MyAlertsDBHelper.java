@@ -66,8 +66,10 @@ public class MyAlertsDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            Cursor c = db.rawQuery(TEST_SQL, null);
-            if (c.getCount() == 0) {
+            /** code will throw an error if the table doesn't exist */
+            try {
+                Cursor c = db.rawQuery(TEST_SQL, null);
+            } catch (Exception e) {
                 db.execSQL(TABLE_SPECIFICATIONS);
                 db.execSQL(DEFAULT_ROW);
             }

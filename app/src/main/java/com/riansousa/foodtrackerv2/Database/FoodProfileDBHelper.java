@@ -62,8 +62,9 @@ public class FoodProfileDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            Cursor c = db.rawQuery(TEST_SQL, null);
-            if (c.getCount() == 0) {
+            try {
+                Cursor c = db.rawQuery(TEST_SQL, null);
+            } catch (Exception e) {
                 db.execSQL(TABLE_SPECIFICATIONS);
             }
         } catch (Exception e) {
