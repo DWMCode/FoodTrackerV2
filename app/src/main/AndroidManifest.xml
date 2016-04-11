@@ -11,7 +11,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -19,7 +18,12 @@
         <activity android:name=".FoodProfileDetailActivity" />
         <activity android:name=".MyAlertActivity" />
         <activity android:name=".MyReportingActivity" />
-        <activity android:name=".MyPreferencesActivity"></activity>
+        <activity android:name=".MyPreferencesActivity">
+            <intent-filter>
+                <action android:name="MyPreferences"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -104,8 +104,9 @@ public class MyAlertActivity extends AppCompatActivity {
             case R.id.menu_my_preferences:
                 Log.i(TAG, "AlertActivity - The preferences icon was clicked");
                 // load my preferences screen
-                Intent preference = new Intent(getApplicationContext(), MyPreferencesActivity.class);
-                startActivity(preference);
+                Intent intentForMyPreferences = new Intent();
+                intentForMyPreferences.setAction("MyPreferences");
+                startActivity(intentForMyPreferences);
                 break;
             case R.id.menu_my_reports:
                 Log.i(TAG, "AlertActivity - The reporting icon was clicked");

@@ -1,5 +1,6 @@
 package com.riansousa.foodtrackerv2;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -104,8 +105,9 @@ public class FoodProfileDetailActivity extends AppCompatActivity {
             case R.id.menu_my_preferences:
                 Log.i(TAG, "FoodProfileDetailActivity - The preferences icon was clicked");
                 // load my preferences screen
-                Intent preference = new Intent(getApplicationContext(), MyPreferencesActivity.class);
-                startActivity(preference);
+                Intent intentForMyPreferences = new Intent();
+                intentForMyPreferences.setAction("MyPreferences");
+                startActivity(intentForMyPreferences);
                 break;
             case R.id.menu_my_reports:
                 Log.i(TAG, "FoodProfileDetailActivity - The reporting icon was clicked");
@@ -293,9 +295,10 @@ public class FoodProfileDetailActivity extends AppCompatActivity {
                         Log.i(TAG, "FoodProfileDetailActivity ERROR - " + e.getMessage());
                     }
 
-                    /** redirect back to food list screen */
-                    Intent foodListScreen = new Intent(getApplicationContext(), FoodProfileListActivity.class);
-                    startActivity(foodListScreen);
+                    /** communicate back to intent initiator */
+                    Intent output = new Intent();
+                    setResult(Activity.RESULT_OK);
+                    finish();
                 }
             });
 

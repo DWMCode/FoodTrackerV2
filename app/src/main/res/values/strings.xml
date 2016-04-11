@@ -34,7 +34,7 @@
     <string name="activity_alert_label_title">MY ALERTS</string>
     <string name="activity_alert_label_update">UPDATE</string>
     <string name="activity_reporting_label_report_title">REPORTING</string>
-    <string name="activity_reporting_label_enter_date">Enter a Date</string>
+    <string name="activity_reporting_label_enter_date">Enter Date</string>
     <string name="activity_reporting_label_go">GO</string>
     <string name="activity_reporting_label_daily_max">Daily Maximum</string>
     <string name="activity_reporting_label_total_cal">Total Calories</string>
@@ -48,18 +48,20 @@
     <string name="activity_reporting_label_hint_total">600</string>
     <string name="activity_reporting_label_hint_calendar">Click for Calendar</string>
     <string name="activity_reporting_label_hint_go">Click to Run Report</string>
+    <string name="activity_reporting_label_hint_email">Send Report To Nutricianist</string>
     <string name="text_fragment">No Data for Report.</string>
     <string name="button_delete">DELETE</string>
     <string name="button_update">UPDATE</string>
     <string name="pref_daily_max">Daily Maximum Calories Exceeded Message</string>
     <string name="pref_fruit_max">Daily Fruit Max Exceeded Message</string>
-    <string name="pref_fruit_min">Daily Fruit Min Exceeded Message</string>
+    <string name="pref_fruit_min">Daily Fruit Min Message</string>
     <string name="pref_grain_max">Daily Grain Max Exceeded Message</string>
-    <string name="pref_grain_min">Daily Grain Min Exceeded Message</string>
+    <string name="pref_grain_min">Daily Grain Min Message</string>
     <string name="pref_protein_max">Daily Protein Max Exceeded Message</string>
-    <string name="pref_protein_min">Daily Protein Min Exceeded Message</string>
+    <string name="pref_protein_min">Daily Protein Min Message</string>
     <string name="pref_veg_max">Daily Vegetable Max Exceeded Message</string>
-    <string name="pref_veg_min">Daily Vegetable Min Exceeded Message</string>
+    <string name="pref_veg_min">Daily Vegetable Min Message</string>
     <string name="pref_dairy_max">Daily Dairy Max Exceeded Message</string>
-    <string name="pref_dairy_min">Daily Dairy Min Exceeded Message</string>
+    <string name="pref_dairy_min">Daily Dairy Min Message</string>
+    <string name="pref_email">Nutricianist Email</string>
 </resources>

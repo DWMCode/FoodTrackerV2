@@ -54,6 +54,10 @@ public class FoodProfileDBHelper extends SQLiteOpenHelper {
                     ISNEW + " INTEGER" +
                     ")";
 
+    /**
+     * class constructor
+     * @param context
+     */
     public FoodProfileDBHelper(Context context) {
         /** Constructor to create DB object */
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -61,17 +65,13 @@ public class FoodProfileDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            try {
-                Cursor c = db.rawQuery(TEST_SQL, null);
-            } catch (Exception e) {
-                db.execSQL(TABLE_SPECIFICATIONS);
-            }
-        } catch (Exception e) {
-            Log.i(TAG, "MyAlertsDBHelper.onCreate() - ERROR:" + e.getMessage());
-        }
+        /** not implemented */
     }
 
+    /**
+     * Public method to re-create the DB structure
+     * @param db
+     */
     public void onReCreate(SQLiteDatabase db) {
         try {
             /** re-initialize the table */

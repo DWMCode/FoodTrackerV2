@@ -55,9 +55,14 @@ public class MyAlertsDBHelper extends SQLiteOpenHelper {
             "INSERT INTO " + TABLE_NAME +
                     "("+NAME+", "+MAXDAILY+", "+FRUITMIN+", "+FRUITMAX+", "+GRAINMIN+", "+GRAINMAX+", "+PROTEINMIN+", "+PROTEINMAX+", "+VEGETABLEMIN+", "+VEGETABLEMAX+", "+DAIRYMIN+", "+DAIRYMAX+")" +
                     " values " +
-                    "('me', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
+                    "('me', 1200, 200, 400, 200, 400, 400, 600, 200, 400, 200, 400)";
+
     private static final String TEST_SQL = "SELECT " + NAME + " FROM " + TABLE_NAME;
 
+    /**
+     * constructor
+     * @param context
+     */
     public MyAlertsDBHelper(Context context) {
         /** Constructor to create DB object */
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -65,19 +70,13 @@ public class MyAlertsDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            /** code will throw an error if the table doesn't exist */
-            try {
-                Cursor c = db.rawQuery(TEST_SQL, null);
-            } catch (Exception e) {
-                db.execSQL(TABLE_SPECIFICATIONS);
-                db.execSQL(DEFAULT_ROW);
-            }
-        } catch (Exception e) {
-            Log.i(TAG, "MyAlertsDBHelper.onCreate() - ERROR:" + e.getMessage());
-        }
+        /** not implemented */
     }
 
+    /**
+     * Public method to re-create the DB structure
+     * @param db
+     */
     public void onReCreate(SQLiteDatabase db) {
         try {
             /** re-initialize the table */

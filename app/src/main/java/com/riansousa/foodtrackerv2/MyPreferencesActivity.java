@@ -26,6 +26,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
      */
     private static final String TAG = "FoodTracker";
     private ErrorLog _log = new ErrorLog();
+    private EditText _email;
     private EditText _maxDailyCalories;
     private EditText _fruitMin;
     private EditText _fruitMax;
@@ -102,8 +103,9 @@ public class MyPreferencesActivity extends AppCompatActivity {
             case R.id.menu_my_preferences:
                 Log.i(TAG, "MyPreferencesActivity - The preferences icon was clicked");
                 // load my preferences screen
-                Intent preference = new Intent(getApplicationContext(), MyPreferencesActivity.class);
-                startActivity(preference);
+                Intent intentForMyPreferences = new Intent();
+                intentForMyPreferences.setAction("MyPreferences");
+                startActivity(intentForMyPreferences);
                 break;
             case R.id.menu_my_reports:
                 Log.i(TAG, "MyPreferencesActivity - The reporting icon was clicked");
@@ -122,6 +124,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
             Button button = (Button) findViewById(R.id.btnUpdatePreferences);
 
             /** instantiate shared preference objects */
+            final SharedPreferences pref_email = getSharedPreferences("pref_email", 0);
             final SharedPreferences pref_maxDailyCalories = getSharedPreferences("pref_maxDailyCalories", 0);
             final SharedPreferences pref_fruitMin = getSharedPreferences("pref_fruitMin", 0);
             final SharedPreferences pref_fruitMax = getSharedPreferences("pref_fruitMax", 0);
@@ -135,6 +138,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
             final SharedPreferences pref_dairyMax = getSharedPreferences("pref_dairyMax", 0);
 
             /** instantiate EditText controls so we can manipulate data */
+            _email = (EditText) findViewById(R.id.txtEmailPref);
             _maxDailyCalories = (EditText) findViewById(R.id.txtMaxCaloriesPref);
             _fruitMin = (EditText) findViewById(R.id.txtFruitMinPref);
             _fruitMax = (EditText) findViewById(R.id.txtFruitMaxPref);
@@ -148,6 +152,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
             _dairyMax = (EditText) findViewById(R.id.txtDairyMaxPref);
 
             /** get values from preferences or set default */
+            final CharSequence value_email = pref_email.getString("pref_email", "");
             final CharSequence value_maxDailyCalories = pref_maxDailyCalories.getString("pref_maxDailyCalories", "");
             final CharSequence value_fruitMin = pref_fruitMin.getString("pref_fruitMin", "");
             final CharSequence value_fruitMax = pref_fruitMax.getString("pref_fruitMax", "");
@@ -161,6 +166,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
             final CharSequence value_dairyMax = pref_dairyMax.getString("pref_dairyMax", "");
 
             /** set UI values */
+            _email.setText(value_email, TextView.BufferType.EDITABLE);
             _maxDailyCalories.setText(value_maxDailyCalories, TextView.BufferType.EDITABLE);
             _fruitMin.setText(value_fruitMin, TextView.BufferType.EDITABLE);
             _fruitMax.setText(value_fruitMax, TextView.BufferType.EDITABLE);
@@ -181,6 +187,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
                     Log.i(TAG, "MyPreferencesActivity - Update Preferences Button Clicked");
 
                     /* get editors */
+                    SharedPreferences.Editor edit_email = pref_email.edit();
                     SharedPreferences.Editor edit_maxDailyCalories = pref_maxDailyCalories.edit();
                     SharedPreferences.Editor edit_fruitMin = pref_fruitMin.edit();
                     SharedPreferences.Editor edit_fruitMax = pref_fruitMax.edit();
@@ -194,6 +201,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
                     SharedPreferences.Editor edit_dairyMax = pref_dairyMax.edit();
 
                     /* set values */
+                    edit_email.putString("pref_email", _email.getText().toString());
                     edit_maxDailyCalories.putString("pref_maxDailyCalories", _maxDailyCalories.getText().toString());
                     edit_fruitMin.putString("pref_fruitMin", _fruitMin.getText().toString());
                     edit_fruitMax.putString("pref_fruitMax", _fruitMax.getText().toString());
@@ -207,6 +215,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
                     edit_dairyMax.putString("pref_dairyMax", _dairyMax.getText().toString());
 
                     /* commit changes */
+                    edit_email.apply();
                     edit_maxDailyCalories.apply();
                     edit_fruitMin.apply();
                     edit_fruitMax.apply();

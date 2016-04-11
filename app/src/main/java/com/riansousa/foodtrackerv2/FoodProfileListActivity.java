@@ -1,5 +1,6 @@
 package com.riansousa.foodtrackerv2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class FoodProfileListActivity extends AppCompatActivity {
     private static final String TAG = "FoodTracker";
     private FoodProfile _foodProfile = new FoodProfile();
     private ErrorLog _log = new ErrorLog();
+    private final int DETAIL_UPDATED = 1;
 
     /**
      * Default method to load the activity
@@ -91,8 +93,9 @@ public class FoodProfileListActivity extends AppCompatActivity {
             case R.id.menu_my_preferences:
                 Log.i(TAG, "FoodProfileListActivity - The preferences icon was clicked");
                 // load my preferences screen
-                Intent preference = new Intent(getApplicationContext(), MyPreferencesActivity.class);
-                startActivity(preference);
+                Intent intentForMyPreferences = new Intent();
+                intentForMyPreferences.setAction("MyPreferences");
+                startActivity(intentForMyPreferences);
                 break;
             case R.id.menu_my_reports:
                 Log.i(TAG, "FoodProfileListActivity - The reporting icon was clicked");
@@ -234,7 +237,8 @@ public class FoodProfileListActivity extends AppCompatActivity {
                     foodListDetailScreen.putExtra("itemSelected", item);
 
                     /** load food list detail screen */
-                    startActivity(foodListDetailScreen);
+                    /** http://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android */
+                    startActivityForResult(foodListDetailScreen, DETAIL_UPDATED);
                 }
             });
 
@@ -243,6 +247,28 @@ public class FoodProfileListActivity extends AppCompatActivity {
             _log.WriteError(getApplicationContext(), "FoodProfileListActivity.initMain() - ERROR: " + e.getMessage());
             /** log to console */
             Log.i(TAG, "FoodProfileListActivity.initMain() - ERROR: " + e.getMessage());
+        }
+    }
+
+    /**
+     * This is the activity result method that is wired to the intent for communicating back to the initiator.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "FoodProfileListActivity.onActivityResult() - Fired");
+        super.onActivityResult(requestCode, resultCode, data);
+        /** check for detail updated */
+        if (requestCode == DETAIL_UPDATED) {
+            /** check for result OK */
+            if (resultCode == Activity.RESULT_OK) {
+                Log.i(TAG, "FoodProfileListActivity.onActivityResult() - RESULT_OK");
+                /** redirect back to food list screen */
+                Intent foodListScreen = new Intent(getApplicationContext(), FoodProfileListActivity.class);
+                startActivity(foodListScreen);
+            }
         }
     }
 }
