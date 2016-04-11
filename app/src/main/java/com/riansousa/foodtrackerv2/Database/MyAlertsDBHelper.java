@@ -80,7 +80,7 @@ public class MyAlertsDBHelper extends SQLiteOpenHelper {
     public void onReCreate(SQLiteDatabase db) {
         try {
             /** re-initialize the table */
-            db.execSQL("DROP TABLE " + TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
             db.execSQL(TABLE_SPECIFICATIONS);
             db.execSQL(DEFAULT_ROW);
         } catch (Exception e) {

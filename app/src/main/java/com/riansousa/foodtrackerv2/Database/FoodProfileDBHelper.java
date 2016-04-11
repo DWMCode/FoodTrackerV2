@@ -75,7 +75,7 @@ public class FoodProfileDBHelper extends SQLiteOpenHelper {
     public void onReCreate(SQLiteDatabase db) {
         try {
             /** re-initialize the table */
-            db.execSQL("DROP TABLE " + TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
             db.execSQL(TABLE_SPECIFICATIONS);
         } catch (Exception e) {
             Log.i(TAG, "MyAlertsDBHelper.onReCreate() - ERROR:" + e.getMessage());

@@ -61,7 +61,7 @@ public class MyRecordDBHelper extends SQLiteOpenHelper {
     public void onReCreate(SQLiteDatabase db) {
         try {
             /** re-initialize the table */
-            db.execSQL("DROP TABLE " + TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
             db.execSQL(TABLE_SPECIFICATIONS);
         } catch (Exception e) {
             Log.i(TAG, "MyRecordDBHelper.onReCreate() - ERROR:" + e.getMessage());
