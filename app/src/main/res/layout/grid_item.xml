@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/record_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        android:layout_weight="0.11"
+        android:width="45dp" />
+
+    <TextView
+        android:id="@+id/record_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group"
+        android:layout_weight="0.10"
+        android:width="32dp" />
+
+    <TextView
+        android:id="@+id/record_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item"
+        android:layout_weight="0.62"
+        android:width="53dp" />
+
+    <TextView
+        android:id="@+id/record_portion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Portion"
+        android:layout_weight="0.17"
+        android:width="10dp" />
+
+    <TextView
+        android:id="@+id/record_calories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calories"
+        android:width="30dp"
+        android:gravity="right" />
+
+</LinearLayout>

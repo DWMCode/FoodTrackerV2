@@ -4,9 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import com.riansousa.foodtrackerv2.Database.FoodProfileDBHelper;
 import com.riansousa.foodtrackerv2.Database.MyAlertsDBHelper;
-
 import java.util.Hashtable;
 
 public class MyAlerts {
@@ -31,9 +29,6 @@ public class MyAlerts {
 
             /** db is accessible for reading */
             db = helper.getReadableDatabase();
-
-            /** create table if it doesn't exist */
-            helper.onCreate(db);
 
             /** columns to return from query */
             String[] returnCols = {

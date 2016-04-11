@@ -5,22 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.riansousa.foodtrackerv2.Database.FoodProfileDBHelper;
-
 import java.util.Hashtable;
 
 public class FoodProfile {
 
     private static final String TAG = "FoodTracker";
-
-    /**
-     * input: string
-     * output: void
-     * This function records items consumed to the repository
-     */
-    public void RecordConsumption(String item) {
-        /** Log item saved to repository */
-        Log.i(TAG, "FoodProfile.RecordConsumption() - The consumption of " + item + " has been saved to the repository.");
-    }
 
     /*
      * input: android.text.Editable
@@ -138,14 +127,6 @@ public class FoodProfile {
 
             /** db is accessible for reading */
             db = helper.getReadableDatabase();
-
-            /** create table if it doesn't exist */
-            helper.onCreate(db);
-
-            /*
-             * System code to re-create DB during DEBUG cycle
-             */
-            //helper.RecreateTable(db);
 
             /** columns to return from query */
             String[] returnCols = {"name"};

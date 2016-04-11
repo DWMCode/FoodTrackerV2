@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +17,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.riansousa.foodtrackerv2.Logic.MyAlerts;
+import com.riansousa.foodtrackerv2.Model.Record;
+import com.riansousa.foodtrackerv2.Model.RecordAdapter;
 import com.riansousa.foodtrackerv2.Logic.ErrorLog;
+import com.riansousa.foodtrackerv2.Logic.MyRecord;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Hashtable;
 
 /**
  * Class that handles all the code processing to support the activity_reporting view.
@@ -35,6 +49,8 @@ public class MyReportingActivity extends AppCompatActivity {
     private int day;
     private int month;
     private int year;
+    private String emailMessage = "";
+    private String reportDate = "";
 
     /**
      * Default method to load the activity
@@ -100,8 +116,9 @@ public class MyReportingActivity extends AppCompatActivity {
             case R.id.menu_my_preferences:
                 Log.i(TAG, "AlertActivity - The preferences icon was clicked");
                 // load my preferences screen
-                Intent preference = new Intent(getApplicationContext(), MyPreferencesActivity.class);
-                startActivity(preference);
+                Intent intentForMyPreferences = new Intent();
+                intentForMyPreferences.setAction("MyPreferences");
+                startActivity(intentForMyPreferences);
                 break;
             case R.id.menu_my_reports:
                 Log.i(TAG, "ReportingActivity - The reporting icon was clicked");
@@ -201,17 +218,27 @@ public class MyReportingActivity extends AppCompatActivity {
             txtReportDate = (EditText)findViewById(R.id.txtReportDate);
             txtReportDate.setText((month + 1) + "/" + day +"/" + year);
 
-            /** instantiate image button object */
+            /** instantiate image button objects */
             ImageButton ibCal = (ImageButton) findViewById(R.id.ibCalendar);
+            ImageButton ibEmail = (ImageButton) findViewById(R.id.ibEmail);
 
-            /** set event listener on button to handle click */
+            /** set event listener on buttons to handle clicks */
             ibCal.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /** handle click */
-                    Log.i(TAG, "ReportingActivity - Image Button Clicked");
+                    Log.i(TAG, "ReportingActivity - Calendar Button Clicked");
                     /** launch pop up dialog for calendar */
                     PopCalendar();
+                }
+            });
+            ibEmail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /** handle click */
+                    Log.i(TAG, "ReportingActivity - Email Button Clicked");
+                    /** launch pop up dialog for email client */
+                    popEmail();
                 }
             });
 
@@ -224,12 +251,53 @@ public class MyReportingActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     /** handle click */
                     txtReportDate = (EditText) findViewById(R.id.txtReportDate);
+
+                    /** get today's date */
+                    Date today = new Date();
+                    /** initialize compare date with today's date as well */
+                    Date newDate = new Date();
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                        newDate = sdf.parse(txtReportDate.getText().toString());
+                    } catch (Exception e) {
+                        Log.i(TAG, "ReportingActivity.onDateSet() - Error: " + e.getMessage());
+                    }
+
+                    /** if the new date is > than today pop toast else set date */
+                    if (newDate.after(today)) {
+                        /** alert */
+                        Toast.makeText(getApplicationContext(), "please type a date from the past", Toast.LENGTH_SHORT).show();
+
+                        /** reset date */
+                        txtReportDate = (EditText) findViewById(R.id.txtReportDate);
+                        txtReportDate.setText((month + 1) + "/" + day +"/" + year);
+
+                        /** set the report for current date */
+                        setReport(today);
+                    } else {
+                        /** set textbox with date */
+                        txtReportDate = (EditText) findViewById(R.id.txtReportDate);
+                        txtReportDate.setText(txtReportDate.getText().toString());
+
+                        /** set the report for the new date */
+                        setReport(newDate);
+                    }
+
                     Log.i(TAG, "ReportingActivity - Go Button Clicked - Report Date " + txtReportDate.getText());
                 }
             });
 
-            // TODO: wrap this with an IF condition based on rows returned from DB. If row count = 0 then pop no data fragment
-            getFragmentManager().beginTransaction().add(R.id.flNoData, new PlaceholderFragment()).commit();
+            /** set the max daily calories */
+            MyAlerts _myAlerts = new MyAlerts();
+            Hashtable<String, String> record = _myAlerts.GetMyAlerts(getApplicationContext());
+            EditText dailyMax = (EditText)findViewById(R.id.txtDailyMax);
+            dailyMax.setText(record.get("maxDaily"), TextView.BufferType.EDITABLE);
+
+            /** set the report for the current date */
+            Date newDate = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            newDate = sdf.parse(txtReportDate.getText().toString());
+            setReport(newDate);
 
         } catch(Exception e) {
             /** log to file */
@@ -252,6 +320,39 @@ public class MyReportingActivity extends AppCompatActivity {
     }
 
     /**
+     * This method is adapted from research on sending emails from Android
+     * http://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application
+     */
+    private void popEmail() {
+        try {
+            /** get nutricianist email from preferences */
+            final SharedPreferences pref_email = getSharedPreferences("pref_email", 0);
+            final CharSequence value_email = pref_email.getString("pref_email", "");
+
+            /** construct email */
+            String[] emails = {value_email.toString()};
+            Intent email = new Intent(Intent.ACTION_SEND);
+            email.putExtra(Intent.EXTRA_EMAIL, emails);
+            email.putExtra(Intent.EXTRA_SUBJECT, "Food Log for " + reportDate);
+            email.putExtra(Intent.EXTRA_TEXT, emailMessage);
+
+            /** need this to prompts email client only */
+            email.setType("message/rfc822");
+
+            /** send to an email client */
+            startActivity(Intent.createChooser(email, "Choose an Email client :"));
+
+        } catch (Exception e) {
+            /** log to file */
+            _log.WriteError(getApplicationContext(), "ReportingActivity.popEmail() - Error: " + e.getMessage());
+            /** log to console */
+            Log.i(TAG, "ReportingActivity.popEmail() - Error: " + e.getMessage());
+            /** send toast to user */
+            Toast.makeText(getApplicationContext(), "please configure an email client on your phone", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
      * Event listener to handle button click on calendar dialog
      * Adapted from:
      * http://www.tutorialspoint.com/android/android_datepicker_control.htm
@@ -260,9 +361,26 @@ public class MyReportingActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         // handle the click
         public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
-            /** set textbox with date */
-            txtReportDate = (EditText)findViewById(R.id.txtReportDate);
-            txtReportDate.setText((selectedMonth + 1) + "/" + selectedDay +"/" + selectedYear);
+            /** get today's date */
+            Date today = new Date();
+            /** initialize compare date with today's date as well */
+            Date newDate = new Date();
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                newDate = sdf.parse((selectedMonth + 1) + "/" + selectedDay +"/" + selectedYear);
+            } catch (Exception e) {
+                Log.i(TAG, "ReportingActivity.onDateSet() - Error: " + e.getMessage());
+            }
+
+            /** if the new date is > than today pop toast else set date */
+            if (newDate.after(today)) {
+                /** alert */
+                Toast.makeText(getApplicationContext(), "please select a date from the past", Toast.LENGTH_SHORT).show();
+            } else {
+                /** set textbox with date */
+                txtReportDate = (EditText) findViewById(R.id.txtReportDate);
+                txtReportDate.setText((selectedMonth + 1) + "/" + selectedDay + "/" + selectedYear);
+            }
         }
     };
 
@@ -289,4 +407,80 @@ public class MyReportingActivity extends AppCompatActivity {
             return rootView;
         }
     }
+
+    /**
+     * This method creates the rows that make up the report
+     * input: selectedDate
+     * output: void
+     */
+    private void setReport(Date selectedDate) {
+        try {
+            /** create date */
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+            /** get records from the repository for today's date */
+            MyRecord _myRecord = new MyRecord();
+            ArrayList<Record> records = _myRecord.getByDate(getApplicationContext(), sdf.format(selectedDate).toString());
+
+            /** set report date for message */
+            reportDate = sdf.format(selectedDate).toString();
+
+            /** create the email message using the record array list */
+            createMessage(records);
+
+            /** get gridview object */
+            GridView gvReportResults = (GridView) findViewById(R.id.gvReportResults);
+
+            /** Populate grid */
+            RecordAdapter adapter = new RecordAdapter(MyReportingActivity.this, records);
+            gvReportResults.setAdapter(adapter);
+
+            /** set the total calories*/
+            int totalCalories = _myRecord.getTotalCalories(records);
+            EditText txtTotalCalories = (EditText) findViewById(R.id.txtTotalCalories);
+            txtTotalCalories.setText(Integer.toString(totalCalories), TextView.BufferType.EDITABLE);
+
+            /** wrap this with an IF condition based on rows returned from DB. If row count = 0 then pop no data fragment */
+            if (records.size() == 0) {
+                /** show no data message */
+                getFragmentManager().beginTransaction().add(R.id.flNoData, new PlaceholderFragment()).commit();
+                gvReportResults.setVisibility(View.GONE);
+            } else {
+                gvReportResults.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "ReportingActivity.setReport() - Error: " + e.getMessage());
+        }
+    }
+
+    /**
+     * This method creates an email message using the record ArrayList
+     * it is used when the email client is popped
+     * input: ArrayList<Record>
+     * output: void
+     */
+    private void createMessage(ArrayList<Record> records) {
+        try {
+            /** check for the size before constructing message headers*/
+            if (records.size() > 0) {
+                /** define table structure */
+                for (int i = 0; i < records.size(); i++) {
+                    /** add rows */
+                    Record record = records.get(i);
+                    String[] time = record.getTime().split(" ");
+                    emailMessage = emailMessage + time[1] + " ";
+                    emailMessage = emailMessage + record.getItem() + " (";
+                    emailMessage = emailMessage + record.getGroup() + ")\r\n";
+                    emailMessage = emailMessage + record.getPortion() + " Portion ";
+                    emailMessage = emailMessage + record.getCalories() + " Cal ";
+                    emailMessage = emailMessage + "\r\n\r\n";
+                }
+
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "ReportingActivity.createMessage() - Error: " + e.getMessage());
+        }
+    }
 }
+

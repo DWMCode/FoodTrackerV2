@@ -1,6 +1,7 @@
 package com.riansousa.foodtrackerv2;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.riansousa.foodtrackerv2.Logic.ErrorLog;
 import com.riansousa.foodtrackerv2.Logic.FoodProfile;
+import com.riansousa.foodtrackerv2.Logic.MyRecord;
+import com.riansousa.foodtrackerv2.Logic.SeedData;
 
 /**
  * Class that handles all the code processing to support the activity_main view.
@@ -95,8 +98,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_my_preferences:
                 Log.i(TAG, "MainActivity - The preferences icon was clicked");
                 // load my preferences screen
-                Intent preference = new Intent(getApplicationContext(), MyPreferencesActivity.class);
-                startActivity(preference);
+                Intent intentForMyPreferences = new Intent();
+                intentForMyPreferences.setAction("MyPreferences");
+                startActivity(intentForMyPreferences);
                 break;
             case R.id.menu_my_reports:
                 Log.i(TAG, "MainActivity - The reporting icon was clicked");
@@ -187,10 +191,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initList() {
         try {
-            /* Instantiate listview object */
+            /** Initialize data */
+            SeedData seed = new SeedData();
+            seed.Run(getApplicationContext());
+
+            /** Instantiate listview object */
             ListView listview = (ListView) findViewById(R.id.listMainItems);
 
-            /*  data pull from repository, use 0 for state param to pull all food items */
+            /**  data pull from repository, use 0 for state param to pull all food items */
             String[] values = _foodProfile.GetFoodProfileList(getApplicationContext(), 0);
 
             if (values.length > 0) {
@@ -220,8 +228,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "MainActivity - You clicked " + item);
 
                     /** Send item to logic layer for processing */
-                    FoodProfile foodProfile = new FoodProfile();
-                    foodProfile.RecordConsumption(item);
+                    MyRecord myRecord = new MyRecord();
+                    myRecord.AddNewItem(getApplicationContext(), item);
 
                     /** send Toast confirm */
                     Toast.makeText(getApplicationContext(), "Your consumption of " + item + " has been recorded.", Toast.LENGTH_SHORT).show();
