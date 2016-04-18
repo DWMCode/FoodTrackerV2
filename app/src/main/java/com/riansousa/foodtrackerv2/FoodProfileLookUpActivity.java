@@ -29,6 +29,9 @@ import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+/**
+ * class to handle all of the code for the FoodProfileLookUpActivity
+ */
 public class FoodProfileLookUpActivity extends AppCompatActivity {
 
     /**

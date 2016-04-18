@@ -556,7 +556,7 @@ public class MyReportingActivity extends AppCompatActivity {
 
             /** setup a dialog window */
             alertDialogBuilder.setCancelable(false)
-                    /** add button */
+                    /** send text button */
                     .setPositiveButton("Send Text", new DialogInterface.OnClickListener() {
                         /** onClick event to handle user click */
                         public void onClick(DialogInterface dialog, int id) {

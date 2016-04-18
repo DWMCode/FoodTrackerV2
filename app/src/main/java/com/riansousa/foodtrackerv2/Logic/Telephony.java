@@ -9,17 +9,25 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- *
+ * This code is excerpted from the lecture notes Module 5
  */
 public class Telephony {
+
+    /** declare global variables */
     private static final String TAG = "FoodTracker";
 
+    /**
+     * this is a method to check the telephony stats and report via post
+     * @param context
+     * @return
+     */
     public String showTelStatus(android.content.Context context) {
         String result = "";
         try {
+            /** instantiate telephony manager */
             final TelephonyManager telMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
-            // callState = state of the call (idle, ringing, off the hook etc.)
+            /** callState = state of the call (idle, ringing, off the hook etc.) */
             int callState = telMgr.getCallState();
             String callStateString = "NA";
             switch (callState) {
@@ -34,7 +42,7 @@ public class Telephony {
                     break;
             }
 
-            // cellLocation = location of cell in latitude/longitude
+            /** cellLocation = location of cell in latitude/longitude */
             CellLocation cellLocation = telMgr.getCellLocation();
             String cellLocationString = null;
             if (cellLocation instanceof GsmCellLocation)
@@ -49,8 +57,10 @@ public class Telephony {
                         ((CdmaCellLocation)cellLocation).getBaseStationLongitude();
             }
 
-            // deviceId, deviceSoftwareVersion, line1Number, networkCountryIso,
-            // networkOperator, networkOperatorName
+            /**
+             * deviceId, deviceSoftwareVersion, line1Number, networkCountryIso,
+             * networkOperator, networkOperatorName
+             * */
             String deviceId = telMgr.getDeviceId();
             String deviceSoftwareVersion = telMgr.getDeviceSoftwareVersion();
             String line1Number = telMgr.getLine1Number();
@@ -58,7 +68,7 @@ public class Telephony {
             String networkOperator = telMgr.getNetworkOperator();
             String networkOperatorName = telMgr.getNetworkOperatorName();
 
-            // phoneType (GSM, CDMA, etc.)
+            /** phoneType (GSM, CDMA, etc.) */
             int phoneType = telMgr.getPhoneType();
             String phoneTypeString = "NA";
             switch (phoneType) {
@@ -73,14 +83,14 @@ public class Telephony {
                     break;
             }
 
-            // simCountryIso, simOperator, simOperatorName, simSerialNumber, simSubscriberId
+            /** simCountryIso, simOperator, simOperatorName, simSerialNumber, simSubscriberId */
             String simCountryIso = telMgr.getSimCountryIso();
             String simOperator = telMgr.getSimOperator();
             String simOperatorName = telMgr.getSimOperatorName();
             String simSerialNumber = telMgr.getSimSerialNumber();
             String simSubscriberId = telMgr.getSubscriberId();
 
-            // simState = state of sim card (pin requires, ready, etc.)
+            /** simState = state of sim card (pin requires, ready, etc.) */
             int simState = telMgr.getSimState();
             String simStateString = "NA";
             switch (simState) {
@@ -104,7 +114,7 @@ public class Telephony {
                     break;
             }
 
-            // return concatenation of the above data, with labels
+            /** return concatenation of the above data, with labels */
             result = "Telephone Manager:  " +
                     "  \ncallState = " + callStateString +
                     "  \ncellLocationString = " + cellLocationString +

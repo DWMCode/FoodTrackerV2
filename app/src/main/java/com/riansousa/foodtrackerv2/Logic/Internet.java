@@ -1,7 +1,6 @@
 package com.riansousa.foodtrackerv2.Logic;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -11,6 +10,9 @@ import java.io.ObjectOutputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+/**
+ * this class handles methods associated with internet access and getting page data
+ */
 public class Internet {
 
     /* declare global variables */
@@ -195,7 +197,7 @@ public class Internet {
             }
         } catch (Exception e) {
             /** log to console */
-            Log.i(TAG, "Internet.removeCode() -  ERROR: " + e.getMessage());
+            Log.i(TAG, "Internet.removeParen() -  ERROR: " + e.getMessage());
         }
         return option;
     }
@@ -221,7 +223,7 @@ public class Internet {
             option = option.substring(listStart+9, listEnd-1);
         } catch (Exception e) {
             /** log to console */
-            Log.i(TAG, "Internet.removeCode() -  ERROR: " + e.getMessage());
+            Log.i(TAG, "Internet.getUrl() -  ERROR: " + e.getMessage());
         }
         return option;
     }
@@ -242,7 +244,7 @@ public class Internet {
             option = option.replace("&amp;","&").trim();
         } catch (Exception e) {
             /** log to console */
-            Log.i(TAG, "Internet.removeCode() -  ERROR: " + e.getMessage());
+            Log.i(TAG, "Internet.getName() -  ERROR: " + e.getMessage());
         }
         return option;
     }

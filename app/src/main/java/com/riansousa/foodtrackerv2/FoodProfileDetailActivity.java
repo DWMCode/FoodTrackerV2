@@ -308,10 +308,9 @@ public class FoodProfileDetailActivity extends AppCompatActivity {
                         Log.i(TAG, "FoodProfileDetailActivity ERROR - " + e.getMessage());
                     }
 
-                    /** communicate back to intent initiator */
-                    Intent output = new Intent();
-                    setResult(Activity.RESULT_OK);
-                    finish();
+                    /** communicate back to main food list via explicit intent */
+                    Intent foodListScreen = new Intent(getApplicationContext(), FoodProfileListActivity.class);
+                    startActivity(foodListScreen);
                 }
             });
 
