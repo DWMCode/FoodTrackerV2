@@ -65,6 +65,7 @@
     <string name="pref_veg_min">Daily Vegetable Min Message</string>
     <string name="pref_dairy_max">Daily Dairy Max Exceeded Message</string>
     <string name="pref_dairy_min">Daily Dairy Min Message</string>
-    <string name="pref_email">Nutritianist Email</string>
-    <string name="pref_sms_msg">Can we schedule a time to speak?</string>
+    <string name="pref_email">Nutritionist Email</string>
+    <string name="pref_phone">Nutritionist Phone</string>
+    <string name="pref_sms">Nutritionist SMS Message</string>
 </resources>

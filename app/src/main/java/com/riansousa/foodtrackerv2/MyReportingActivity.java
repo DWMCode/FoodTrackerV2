@@ -268,8 +268,12 @@ public class MyReportingActivity extends AppCompatActivity {
                         return;
                     }
 
+                    /** get phone number from shared pref */
+                    final SharedPreferences pref_phone = getSharedPreferences("pref_phone", 0);
+                    final CharSequence value_phone = pref_phone.getString("pref_phone", "");
+
                     /** make call with implicit intent */
-                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:8005551212"));
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+value_phone.toString()));
                     startActivity(intent);
                 }
             });
@@ -279,7 +283,7 @@ public class MyReportingActivity extends AppCompatActivity {
                     /** handle click */
                     Log.i(TAG, "ReportingActivity - Sms Button Clicked");
                     /** pop sms dialog */
-                    showAddNewDialog();
+                    showSmsDialog();
                 }
             });
 
@@ -528,7 +532,7 @@ public class MyReportingActivity extends AppCompatActivity {
      * code pattern on input dialog adapted from http://javatechig.com/android/android-input-dialog-example
      * customization of activity class, layout views and click implementation.
      */
-    private void showAddNewDialog() {
+    private void showSmsDialog() {
         try {
             /** instantiate layout inflator */
             LayoutInflater layoutInflater = LayoutInflater.from(MyReportingActivity.this);
@@ -542,6 +546,13 @@ public class MyReportingActivity extends AppCompatActivity {
 
             /** get the edittext object from the new_item view */
             final EditText editText = (EditText) newItemView.findViewById(R.id.txtSmsMsg);
+
+            /** get shared preferences */
+            final SharedPreferences pref_sms = getSharedPreferences("pref_sms", 0);
+            final CharSequence value_sms = pref_sms.getString("pref_sms", "");
+
+            /** set the message on the dialog from shared pref value */
+            editText.setText(value_sms);
 
             /** setup a dialog window */
             alertDialogBuilder.setCancelable(false)
@@ -557,11 +568,14 @@ public class MyReportingActivity extends AppCompatActivity {
                                  * research on SMS from
                                  * http://www.tutorialspoint.com/android/android_sending_sms.htm
                                  */
+                                final SharedPreferences pref_phone = getSharedPreferences("pref_phone", 0);
+                                final CharSequence value_phone = pref_phone.getString("pref_phone", "");
+
                                 android.text.Editable item = editText.getText();
                                 Log.i(TAG, "SMS - " + editText.getText());
 
                                 SmsManager smsManager = SmsManager.getDefault();
-                                smsManager.sendTextMessage("6179740539", null, editText.getText().toString(), null, null);
+                                smsManager.sendTextMessage(value_phone.toString(), null, editText.getText().toString(), null, null);
                                 Log.i(TAG, "SMS Sent!" + editText.getText());
                                 Toast.makeText(getApplicationContext(), "SMS Sent!", Toast.LENGTH_SHORT).show();
 

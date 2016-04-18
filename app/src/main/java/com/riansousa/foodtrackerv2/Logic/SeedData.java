@@ -11,6 +11,7 @@ import com.riansousa.foodtrackerv2.Database.MyRecordDBHelper;
 public class SeedData {
 
     private static final String TAG = "FoodTracker";
+    private static final String KEY = "pref_SeedCompleteV3";
 
     /**
      * Method to create the table structure, preferences and seed data to run the app
@@ -19,15 +20,15 @@ public class SeedData {
     public void Run(android.content.Context context) {
         try {
             /** get system preference for seed data */
-            final SharedPreferences pref_SeedComplete = context.getSharedPreferences("pref_SeedComplete", 0);
-            final CharSequence value_SeedComplete = pref_SeedComplete.getString("pref_SeedComplete", "");
+            final SharedPreferences pref_SeedComplete = context.getSharedPreferences(KEY, 0);
+            final CharSequence value_SeedComplete = pref_SeedComplete.getString(KEY, "");
 
             /** if this isn't set then run config */
             if (value_SeedComplete == "") {
 
                 /** set pre-configuration complete flag */
                 SharedPreferences.Editor edit_SeedComplete = pref_SeedComplete.edit();
-                edit_SeedComplete.putString("pref_SeedComplete", "complete");
+                edit_SeedComplete.putString(KEY, "complete");
                 edit_SeedComplete.apply();
 
                 /**
@@ -232,6 +233,8 @@ public class SeedData {
                  */
                 /** instantiate shared preference objects */
                 final SharedPreferences pref_email = context.getSharedPreferences("pref_email", 0);
+                final SharedPreferences pref_phone = context.getSharedPreferences("pref_phone", 0);
+                final SharedPreferences pref_sms = context.getSharedPreferences("pref_sms", 0);
                 final SharedPreferences pref_maxDailyCalories = context.getSharedPreferences("pref_maxDailyCalories", 0);
                 final SharedPreferences pref_fruitMin = context.getSharedPreferences("pref_fruitMin", 0);
                 final SharedPreferences pref_fruitMax = context.getSharedPreferences("pref_fruitMax", 0);
@@ -244,8 +247,10 @@ public class SeedData {
                 final SharedPreferences pref_dairyMin = context.getSharedPreferences("pref_dairyMin", 0);
                 final SharedPreferences pref_dairyMax = context.getSharedPreferences("pref_dairyMax", 0);
 
-            /* get editors */
+                /* get editors */
                 SharedPreferences.Editor edit_email = pref_email.edit();
+                SharedPreferences.Editor edit_phone = pref_phone.edit();
+                SharedPreferences.Editor edit_sms = pref_sms.edit();
                 SharedPreferences.Editor edit_maxDailyCalories = pref_maxDailyCalories.edit();
                 SharedPreferences.Editor edit_fruitMin = pref_fruitMin.edit();
                 SharedPreferences.Editor edit_fruitMax = pref_fruitMax.edit();
@@ -258,8 +263,10 @@ public class SeedData {
                 SharedPreferences.Editor edit_dairyMin = pref_dairyMin.edit();
                 SharedPreferences.Editor edit_dairyMax = pref_dairyMax.edit();
 
-            /* set values */
+                /* set values */
                 edit_email.putString("pref_email", "nehaabrol87@gmail.com");
+                edit_phone.putString("pref_phone", "8005551212");
+                edit_sms.putString("pref_sms", "What would be a good time to speak?");
                 edit_maxDailyCalories.putString("pref_maxDailyCalories", "You have gone over your calorie limit for the day.");
                 edit_fruitMin.putString("pref_fruitMin", "Eat some berries or a banana.");
                 edit_fruitMax.putString("pref_fruitMax", "Pick something other than fruit.");
@@ -272,8 +279,10 @@ public class SeedData {
                 edit_dairyMin.putString("pref_dairyMin", "Drink some milk or have a yogurt.");
                 edit_dairyMax.putString("pref_dairyMax", "Pick something other than dairy.");
 
-            /* commit changes */
+                /* commit changes */
                 edit_email.apply();
+                edit_phone.apply();
+                edit_sms.apply();
                 edit_maxDailyCalories.apply();
                 edit_fruitMin.apply();
                 edit_fruitMax.apply();
