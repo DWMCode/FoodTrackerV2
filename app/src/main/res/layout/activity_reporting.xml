@@ -30,12 +30,14 @@
         android:layout_below="@+id/lblReportTitle"
         android:id="@+id/llReportDate">
 
-        <TextView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/activity_reporting_label_enter_date"
-            android:id="@+id/lblEnterDate" />
+            android:id="@+id/ibCalendar"
+            android:src="@drawable/ic_date_range_black"
+            android:layout_gravity="bottom"
+            android:foregroundGravity="bottom"
+            android:contentDescription="@string/activity_reporting_label_hint_calendar" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -60,20 +62,27 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ibCalendar"
-            android:src="@drawable/ic_date_range_black"
-            android:layout_gravity="bottom"
-            android:foregroundGravity="bottom"
-            android:contentDescription="@string/activity_reporting_label_hint_calendar" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ibEmail"
             android:src="@drawable/ic_email_black"
             android:layout_gravity="bottom"
             android:foregroundGravity="bottom"
             android:contentDescription="@string/activity_reporting_label_hint_email" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibCall"
+            android:src="@drawable/ic_call_black"
+            android:layout_gravity="bottom"
+            android:foregroundGravity="bottom" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibSms"
+            android:src="@drawable/ic_message_black"
+            android:layout_gravity="bottom"
+            android:foregroundGravity="bottom" />
 
     </LinearLayout>
 

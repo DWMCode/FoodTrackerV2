@@ -12,10 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.riansousa.foodtrackerv2.Logic.ErrorLog;
 import com.riansousa.foodtrackerv2.Logic.FoodProfile;
+import com.riansousa.foodtrackerv2.Logic.Internet;
+
 import java.util.Hashtable;
 
 /**
@@ -29,6 +32,7 @@ public class FoodProfileDetailActivity extends AppCompatActivity {
     private FoodProfile _foodProfile = new FoodProfile();
     private ErrorLog _log = new ErrorLog();
     private static final String TAG = "FoodTracker";
+    private TextView _lblFoodDetailTitle;
     private EditText _itemName;
     private EditText _fruitCalories;
     private EditText _grainCalories;
@@ -201,12 +205,14 @@ public class FoodProfileDetailActivity extends AppCompatActivity {
             /** instantiate button objects */
             Button updateButton = (Button) findViewById(R.id.btnUpdateFoodItem);
             Button deleteButton = (Button) findViewById(R.id.btnDeleteFoodItem);
+            ImageButton lookUpButton = (ImageButton)findViewById(R.id.imgLookUp);
 
             /*
              * assign values to global variables
              * research on "getting" UI data from
              * http://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field
              */
+            _lblFoodDetailTitle = (TextView)findViewById(R.id.lblFoodDetailTitle);
             _itemName = (EditText)findViewById(R.id.txtItemName);
             _fruitCalories = (EditText)findViewById(R.id.txtFruitCalories);
             _grainCalories = (EditText)findViewById(R.id.txtGrainCalories);
@@ -227,8 +233,15 @@ public class FoodProfileDetailActivity extends AppCompatActivity {
                  * http://stackoverflow.com/questions/4590957/how-to-set-text-in-an-edittext
                  */
                 String value = extras.getString("itemSelected").replace(" - NEW","").trim();
+                String calories = extras.getString("calorieCount");
                 _itemName.setText(value, TextView.BufferType.EDITABLE);
                 _itemName.setFocusable(false);
+
+                if (calories != null) {
+                    String title = "Update Food Item To: " + " " + calories.trim() + "cal";
+                    _lblFoodDetailTitle.setText(title);
+                    Toast.makeText(getApplicationContext(), "Update Food Item To: " + " " + calories.trim() + "cal", Toast.LENGTH_SHORT).show();
+                }
 
                 /* pull from db and set values */
                 Hashtable<String, String> record = _foodProfile.GetFoodProfileByName(getApplicationContext(), _itemName.getText().toString());
@@ -315,6 +328,36 @@ public class FoodProfileDetailActivity extends AppCompatActivity {
                     /** redirect back to food list screen */
                     Intent foodListScreen = new Intent(getApplicationContext(), FoodProfileListActivity.class);
                     startActivity(foodListScreen);
+                }
+            });
+
+            /** set listener for look up button onClick event */
+            lookUpButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /** get list of results from caloriecount.com */
+                    Internet iNet = new Internet();
+
+                    /** get the connectivity status*/
+                    String msg = iNet.logInetConn(getApplicationContext());
+
+                    if (msg.indexOf("TRUE") > -1) {
+                        /** Toast iNet Connectivity status */
+                        Toast.makeText(getApplicationContext(), msg.replace("TRUE|",""), Toast.LENGTH_SHORT).show();
+
+                        /** create new intent */
+                        Intent lookUp = new Intent(getApplicationContext(), FoodProfileLookUpActivity.class);
+
+                        /** set key/value data pair to pass selected item */
+                        lookUp.putExtra("itemSelected", _itemName.getText().toString());
+
+                        /** load food list detail screen */
+                        startActivity(lookUp);
+                    } else {
+                        /** redirect back to food list screen */
+                        Intent foodListScreen = new Intent(getApplicationContext(), FoodProfileListActivity.class);
+                        startActivity(foodListScreen);
+                    }
                 }
             });
         } catch (Exception e) {

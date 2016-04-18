@@ -7,9 +7,11 @@
     <string name="menu_my_reports">My Reports</string>
     <string name="recorder_title">ADD NEW FOOD ITEM</string>
     <string name="main_activity_instructions">Click List Item to Record</string>
+    <string name="activity_food_lookup">Click Similar Item from CalorieCount</string>
     <string name="activity_food_list">Click List Item to Update Profile</string>
     <string name="activity_food_List_title_add">ADD NEW FOOD ITEM</string>
     <string name="activity_food_List_title_update">UPDATE FOOD ITEM</string>
+    <string name="activity_food_List_detail_item_lookup">Click here for calorie information on similar items from caloriecount.com</string>
     <string name="activity_food_List_detail_item_name">Item Name</string>
     <string name="activity_food_List_detail_fruit">FRUIT CALORIES</string>
     <string name="activity_food_List_detail_grain">GRAIN CALORIES</string>
@@ -34,7 +36,7 @@
     <string name="activity_alert_label_title">MY ALERTS</string>
     <string name="activity_alert_label_update">UPDATE</string>
     <string name="activity_reporting_label_report_title">REPORTING</string>
-    <string name="activity_reporting_label_enter_date">Enter Date</string>
+    <string name="activity_reporting_label_enter_date">Date</string>
     <string name="activity_reporting_label_go">GO</string>
     <string name="activity_reporting_label_daily_max">Daily Maximum</string>
     <string name="activity_reporting_label_total_cal">Total Calories</string>
@@ -63,5 +65,6 @@
     <string name="pref_veg_min">Daily Vegetable Min Message</string>
     <string name="pref_dairy_max">Daily Dairy Max Exceeded Message</string>
     <string name="pref_dairy_min">Daily Dairy Min Message</string>
-    <string name="pref_email">Nutricianist Email</string>
+    <string name="pref_email">Nutritianist Email</string>
+    <string name="pref_sms_msg">Can we schedule a time to speak?</string>
 </resources>

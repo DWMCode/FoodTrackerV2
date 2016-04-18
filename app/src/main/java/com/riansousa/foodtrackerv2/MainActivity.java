@@ -1,9 +1,16 @@
 package com.riansousa.foodtrackerv2;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
+import android.telephony.cdma.CdmaCellLocation;
+import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,10 +24,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.telephony.CellLocation;
+
 import com.riansousa.foodtrackerv2.Logic.ErrorLog;
 import com.riansousa.foodtrackerv2.Logic.FoodProfile;
 import com.riansousa.foodtrackerv2.Logic.MyRecord;
 import com.riansousa.foodtrackerv2.Logic.SeedData;
+import com.riansousa.foodtrackerv2.Logic.DownloadWebPageTask;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Class that handles all the code processing to support the activity_main view.
@@ -44,14 +62,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initList();
+        //logInetConn();
+        //logTelephony();
+        //logWeb();
     }
 
     /**
      * Method to create the menu.
      * Adapted from: Lecture Notes Module 1: Example illustrating state changes
      *
-     * @param menu  Takes a Menu object
-     * @return      boolean value from super
+     * @param menu Takes a Menu object
+     * @return boolean value from super
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,15 +89,14 @@ public class MainActivity extends AppCompatActivity {
      * research on switching between activity screens from
      * http://stackoverflow.com/questions/17743094/how-to-switch-between-activities-screens-in-android
      *
-     * @param item  The menu item selected by the user
-     * @return      boolean value from super
+     * @param item The menu item selected by the user
+     * @return boolean value from super
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // research on switching between activity screens from
         // http://stackoverflow.com/questions/17743094/how-to-switch-between-activities-screens-in-android
-        switch(item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.menu_food_profile:
                 Log.i(TAG, "MainActivity - The food list icon was clicked");
                 // load food list screen
@@ -271,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
             LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
 
             /** load the new_item input dialog view */
-            View newItemView  = layoutInflater.inflate(R.layout.new_item, null);
+            View newItemView = layoutInflater.inflate(R.layout.new_item, null);
 
             /** create modal with AlertDialog */
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
@@ -309,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     })
-                    /** cancel button */
+                            /** cancel button */
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         /** onClick event to handle user click */
                         public void onClick(DialogInterface dialog, int id) {

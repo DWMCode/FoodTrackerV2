@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/activity_food_List_title_update"
-            android:id="@+id/textView"
+            android:id="@+id/lblFoodDetailTitle"
             android:layout_gravity="center_horizontal"
             android:paddingBottom="3dp"
             android:textAlignment="center"
@@ -33,15 +33,28 @@
             android:textColor="#ffffff"
             style="@style/Title_Colors" />
 
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtItemName"
-            android:layout_gravity="center_horizontal"
-            android:inputType="text"
-            android:editable="false"
-            android:enabled="false"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imgLookUp"
+                android:src="@drawable/ic_library_books_black"
+                android:contentDescription="@string/activity_food_List_detail_item_lookup" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtItemName"
+                android:layout_gravity="center_horizontal"
+                android:inputType="text"
+                android:editable="false"
+                android:enabled="false"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <GridLayout
             android:layout_width="fill_parent"

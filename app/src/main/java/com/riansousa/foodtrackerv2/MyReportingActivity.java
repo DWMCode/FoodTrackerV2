@@ -1,12 +1,20 @@
 package com.riansousa.foodtrackerv2;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.riansousa.foodtrackerv2.Logic.MyAlerts;
+import com.riansousa.foodtrackerv2.Logic.Telephony;
 import com.riansousa.foodtrackerv2.Model.Record;
 import com.riansousa.foodtrackerv2.Model.RecordAdapter;
 import com.riansousa.foodtrackerv2.Logic.ErrorLog;
@@ -43,6 +52,7 @@ public class MyReportingActivity extends AppCompatActivity {
      * private global variables
      */
     private static final String TAG = "FoodTracker";
+    private Telephony _telephony = new Telephony();
     private ErrorLog _log = new ErrorLog();
     private Calendar calSelectDate;
     private EditText txtReportDate;
@@ -69,7 +79,7 @@ public class MyReportingActivity extends AppCompatActivity {
      * Adapted from: Lecture Notes Module 1: Example illustrating state changes
      *
      * @param menu  Takes a Menu object
-     * @return      boolean value from super
+     * @return boolean value from super
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,14 +97,13 @@ public class MyReportingActivity extends AppCompatActivity {
      * http://stackoverflow.com/questions/17743094/how-to-switch-between-activities-screens-in-android
      *
      * @param item  The menu item selected by the user
-     * @return      boolean value from super
+     * @return boolean value from super
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // research on switching between activity screens from
         // http://stackoverflow.com/questions/17743094/how-to-switch-between-activities-screens-in-android
-        switch(item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.menu_food_profile:
                 Log.i(TAG, "ReportingActivity - The food list icon was clicked");
                 // load food list screen
@@ -215,12 +224,14 @@ public class MyReportingActivity extends AppCompatActivity {
             year = calSelectDate.get(Calendar.YEAR);
 
             /** set textbox with date */
-            txtReportDate = (EditText)findViewById(R.id.txtReportDate);
-            txtReportDate.setText((month + 1) + "/" + day +"/" + year);
+            txtReportDate = (EditText) findViewById(R.id.txtReportDate);
+            txtReportDate.setText((month + 1) + "/" + day + "/" + year);
 
             /** instantiate image button objects */
             ImageButton ibCal = (ImageButton) findViewById(R.id.ibCalendar);
             ImageButton ibEmail = (ImageButton) findViewById(R.id.ibEmail);
+            ImageButton ibCall = (ImageButton) findViewById(R.id.ibCall);
+            ImageButton ibSms = (ImageButton) findViewById(R.id.ibSms);
 
             /** set event listener on buttons to handle clicks */
             ibCal.setOnClickListener(new View.OnClickListener() {
@@ -239,6 +250,36 @@ public class MyReportingActivity extends AppCompatActivity {
                     Log.i(TAG, "ReportingActivity - Email Button Clicked");
                     /** launch pop up dialog for email client */
                     popEmail();
+                }
+            });
+            ibCall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /** handle click */
+                    Log.i(TAG, "ReportingActivity - Call Button Clicked");
+
+                    /** toast the telephony status */
+                    _telephony.showTelStatus(getApplicationContext());
+
+                    /** perform permission test, if failure stop execution */
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        /** alert */
+                        Toast.makeText(getApplicationContext(), "you do not have permission to make a call", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    /** make call with implicit intent */
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:8005551212"));
+                    startActivity(intent);
+                }
+            });
+            ibSms.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /** handle click */
+                    Log.i(TAG, "ReportingActivity - Sms Button Clicked");
+                    /** pop sms dialog */
+                    showAddNewDialog();
                 }
             });
 
@@ -270,7 +311,7 @@ public class MyReportingActivity extends AppCompatActivity {
 
                         /** reset date */
                         txtReportDate = (EditText) findViewById(R.id.txtReportDate);
-                        txtReportDate.setText((month + 1) + "/" + day +"/" + year);
+                        txtReportDate.setText((month + 1) + "/" + day + "/" + year);
 
                         /** set the report for current date */
                         setReport(today);
@@ -290,7 +331,7 @@ public class MyReportingActivity extends AppCompatActivity {
             /** set the max daily calories */
             MyAlerts _myAlerts = new MyAlerts();
             Hashtable<String, String> record = _myAlerts.GetMyAlerts(getApplicationContext());
-            EditText dailyMax = (EditText)findViewById(R.id.txtDailyMax);
+            EditText dailyMax = (EditText) findViewById(R.id.txtDailyMax);
             dailyMax.setText(record.get("maxDaily"), TextView.BufferType.EDITABLE);
 
             /** set the report for the current date */
@@ -299,7 +340,7 @@ public class MyReportingActivity extends AppCompatActivity {
             newDate = sdf.parse(txtReportDate.getText().toString());
             setReport(newDate);
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             /** log to file */
             _log.WriteError(getApplicationContext(), "ReportingActivity.initMain() - Error: " + e.getMessage());
             /** log to console */
@@ -360,14 +401,14 @@ public class MyReportingActivity extends AppCompatActivity {
      */
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         // handle the click
-        public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
             /** get today's date */
             Date today = new Date();
             /** initialize compare date with today's date as well */
             Date newDate = new Date();
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-                newDate = sdf.parse((selectedMonth + 1) + "/" + selectedDay +"/" + selectedYear);
+                newDate = sdf.parse((selectedMonth + 1) + "/" + selectedDay + "/" + selectedYear);
             } catch (Exception e) {
                 Log.i(TAG, "ReportingActivity.onDateSet() - Error: " + e.getMessage());
             }
@@ -396,12 +437,12 @@ public class MyReportingActivity extends AppCompatActivity {
 
         /** method to invoke the text_fragment view and show the No Data message */
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = null;
             /** wrapped with try/catch for error reporting */
             try {
                 rootView = inflater.inflate(R.layout.text_fragment, container, false);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 Log.i(TAG, "ReportingActivity.PlaceholderFragment() - Error: " + e.getMessage());
             }
             return rootView;
@@ -480,6 +521,73 @@ public class MyReportingActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             Log.i(TAG, "ReportingActivity.createMessage() - Error: " + e.getMessage());
+        }
+    }
+
+    /*
+     * code pattern on input dialog adapted from http://javatechig.com/android/android-input-dialog-example
+     * customization of activity class, layout views and click implementation.
+     */
+    private void showAddNewDialog() {
+        try {
+            /** instantiate layout inflator */
+            LayoutInflater layoutInflater = LayoutInflater.from(MyReportingActivity.this);
+
+            /** load the new_item input dialog view */
+            View newItemView = layoutInflater.inflate(R.layout.sms_msg, null);
+
+            /** create modal with AlertDialog */
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MyReportingActivity.this);
+            alertDialogBuilder.setView(newItemView);
+
+            /** get the edittext object from the new_item view */
+            final EditText editText = (EditText) newItemView.findViewById(R.id.txtSmsMsg);
+
+            /** setup a dialog window */
+            alertDialogBuilder.setCancelable(false)
+                    /** add button */
+                    .setPositiveButton("Send Text", new DialogInterface.OnClickListener() {
+                        /** onClick event to handle user click */
+                        public void onClick(DialogInterface dialog, int id) {
+                            try {
+                                /*
+                                 * get the item input
+                                 * research on "getting" UI data from
+                                 * http://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field
+                                 * research on SMS from
+                                 * http://www.tutorialspoint.com/android/android_sending_sms.htm
+                                 */
+                                android.text.Editable item = editText.getText();
+                                Log.i(TAG, "SMS - " + editText.getText());
+
+                                SmsManager smsManager = SmsManager.getDefault();
+                                smsManager.sendTextMessage("6179740539", null, editText.getText().toString(), null, null);
+                                Log.i(TAG, "SMS Sent!" + editText.getText());
+                                Toast.makeText(getApplicationContext(), "SMS Sent!", Toast.LENGTH_SHORT).show();
+
+                            } catch (Exception e) {
+                                Log.i(TAG, "ReportingActivity ERROR - " + e.getMessage());
+                                Toast.makeText(getApplicationContext(), "SMS failed:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                            /** cancel button */
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        /** onClick event to handle user click */
+                        public void onClick(DialogInterface dialog, int id) {
+                            /** close dialog */
+                            dialog.cancel();
+                        }
+                    });
+
+            /** pop new_item input dialog */
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        } catch (Exception e) {
+            /** log to file */
+            _log.WriteError(getApplicationContext(), "ReportingActivity.showAddNewDialog() -  ERROR: " + e.getMessage());
+            /** log to console */
+            Log.i(TAG, "ReportingActivity.showAddNewDialog() -  ERROR: " + e.getMessage());
         }
     }
 }
