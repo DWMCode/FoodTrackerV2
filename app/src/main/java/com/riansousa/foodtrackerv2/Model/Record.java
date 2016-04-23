@@ -7,7 +7,7 @@ package com.riansousa.foodtrackerv2.Model;
  */
 public class Record {
 
-    /* declare privavate variables */
+    /* declare private variables */
     private int id;
     private String time;
     private String group;

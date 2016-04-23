@@ -1,17 +1,24 @@
 package com.riansousa.foodtrackerv2.Logic;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.riansousa.foodtrackerv2.Database.FoodProfileDBHelper;
 import com.riansousa.foodtrackerv2.Database.MyAlertsDBHelper;
 import com.riansousa.foodtrackerv2.Database.MyRecordDBHelper;
+import com.riansousa.foodtrackerv2.AlarmReceiver;
+
+import java.util.Calendar;
 
 public class SeedData {
 
     private static final String TAG = "FoodTracker";
-    private static final String KEY = "pref_SeedCompleteV3";
+    private static final String KEY = "pref_SeedCompleteV10";
 
     /**
      * Method to create the table structure, preferences and seed data to run the app
@@ -247,7 +254,7 @@ public class SeedData {
                 final SharedPreferences pref_dairyMin = context.getSharedPreferences("pref_dairyMin", 0);
                 final SharedPreferences pref_dairyMax = context.getSharedPreferences("pref_dairyMax", 0);
 
-                /* get editors */
+                /** get editors */
                 SharedPreferences.Editor edit_email = pref_email.edit();
                 SharedPreferences.Editor edit_phone = pref_phone.edit();
                 SharedPreferences.Editor edit_sms = pref_sms.edit();
@@ -263,7 +270,7 @@ public class SeedData {
                 SharedPreferences.Editor edit_dairyMin = pref_dairyMin.edit();
                 SharedPreferences.Editor edit_dairyMax = pref_dairyMax.edit();
 
-                /* set values */
+                /** set values */
                 edit_email.putString("pref_email", "nehaabrol87@gmail.com");
                 edit_phone.putString("pref_phone", "8005551212");
                 edit_sms.putString("pref_sms", "What would be a good time to speak?");
@@ -279,7 +286,7 @@ public class SeedData {
                 edit_dairyMin.putString("pref_dairyMin", "Drink some milk or have a yogurt.");
                 edit_dairyMax.putString("pref_dairyMax", "Pick something other than dairy.");
 
-                /* commit changes */
+                /** commit changes */
                 edit_email.apply();
                 edit_phone.apply();
                 edit_sms.apply();
@@ -294,6 +301,24 @@ public class SeedData {
                 edit_vegetableMax.apply();
                 edit_dairyMin.apply();
                 edit_dairyMax.apply();
+
+                /** instantiate alarm manager */
+                AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+                /** create an intent using the AlarmReceiver as the catcher */
+                Intent intent = new Intent(context, AlarmReceiver.class);
+
+                /** wrap the intent in a pending intent */
+                PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+                /** Set the alarm start time */
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, 9);
+                calendar.set(Calendar.MINUTE, 25);
+
+                /** set Inexact repeating on a daily basis with wake up enabled */
+                alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
             }
 
             Log.i(TAG, "SeedData.Run() - executed");

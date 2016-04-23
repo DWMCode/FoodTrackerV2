@@ -3,12 +3,8 @@ package com.riansousa.foodtrackerv2.Logic;
 import android.os.AsyncTask;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Hashtable;
 
 /*
  * This class is adapted from examples on:

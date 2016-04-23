@@ -1,16 +1,11 @@
 package com.riansousa.foodtrackerv2;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
-import android.telephony.cdma.CdmaCellLocation;
-import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,21 +19,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.telephony.CellLocation;
 
 import com.riansousa.foodtrackerv2.Logic.ErrorLog;
 import com.riansousa.foodtrackerv2.Logic.FoodProfile;
+import com.riansousa.foodtrackerv2.Logic.MyAlerts;
 import com.riansousa.foodtrackerv2.Logic.MyRecord;
 import com.riansousa.foodtrackerv2.Logic.SeedData;
-import com.riansousa.foodtrackerv2.Logic.DownloadWebPageTask;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * Class that handles all the code processing to support the activity_main view.
@@ -62,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initList();
-        //logInetConn();
-        //logTelephony();
-        //logWeb();
     }
 
     /**
@@ -251,8 +234,8 @@ public class MainActivity extends AppCompatActivity {
                     MyRecord myRecord = new MyRecord();
                     myRecord.AddNewItem(getApplicationContext(), item);
 
-                    /** send Toast confirm */
-                    Toast.makeText(getApplicationContext(), "Your consumption of " + item + " has been recorded.", Toast.LENGTH_SHORT).show();
+                    /** check the alert status */
+                    checkAlertStatus(item);
                 }
             });
 
@@ -346,6 +329,57 @@ public class MainActivity extends AppCompatActivity {
             _log.WriteError(getApplicationContext(), "MainActivity.showAddNewDialog() -  ERROR: " + e.getMessage());
             /** log to console */
             Log.i(TAG, "MainActivity.showAddNewDialog() -  ERROR: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Method to check if the user has eaten too much and to pop a message if that is the case
+     * @param item
+     */
+    private void checkAlertStatus(String item){
+        try {
+            /** Check My Alert criteria */
+            MyAlerts myAlerts = new MyAlerts();
+            String notification = myAlerts.CheckNotification(getApplicationContext());
+
+            /** set length for compare */
+            int length = notification.length();
+
+            /** check for notification */
+            if (length > 0) {
+
+                /** pop alert dialog with notification message */
+                /** code adapted from lecture notes module 6, Alerts > Example */
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder
+                        .setTitle("Alert Notification")
+                        .setMessage(notification)
+                        .setCancelable(false)
+                        .setNegativeButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        /** close the dialog */
+                                        dialog.cancel();
+                                    }
+                                }
+                        );
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+                /** instantiate vibrator and vibrate for 300 milli
+                 * research from: http://android.konreu.com/developer-how-to/vibration-examples-for-android-phone-development/
+                 * */
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(300);
+            } else {
+                /** send Toast confirm */
+                Toast.makeText(getApplicationContext(), "Your consumption of " + item + " has been recorded.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            /** log to file */
+            _log.WriteError(getApplicationContext(), "MainActivity.checkAlertStatus() -  ERROR: " + e.getMessage());
+            /** log to console */
+            Log.i(TAG, "MainActivity.checkAlertStatus() -  ERROR: " + e.getMessage());
         }
     }
 }

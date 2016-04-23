@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -123,7 +122,7 @@ public class MyReportingActivity extends AppCompatActivity {
                 startActivity(alert);
                 break;
             case R.id.menu_my_preferences:
-                Log.i(TAG, "AlertActivity - The preferences icon was clicked");
+                Log.i(TAG, "ReportingActivity - The preferences icon was clicked");
                 // load my preferences screen
                 Intent intentForMyPreferences = new Intent();
                 intentForMyPreferences.setAction("MyPreferences");
