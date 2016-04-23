@@ -31,20 +31,26 @@ public class AlarmReceiver extends BroadcastReceiver {
             MyAlerts myAlert = new MyAlerts();
             String notification = myAlert.CheckAlarm(context);
 
-            /** if there are notifications then show and vibrate */
-            /** research on bigText() from: http://developer.android.com/reference/android/app/Notification.BigTextStyle.html */
-            Notification theNotification = new Notification.Builder(context.getApplicationContext())
-                    .setContentTitle("Alert Notification")
-                    .setContentText("You Need To Eat More...")
-                    .setSmallIcon(R.drawable.ic_warning_black)
-                    .setStyle(new Notification.BigTextStyle()
-                            .bigText(notification))
-                    .build();
+            /** check for message length before notifying */
+            if (notification.length() > 0) {
 
-            /** post the notification */
-            final NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(MY_NOTIFICATION_ID, theNotification);
+                /** if there are notifications then show */
+                /** research on bigText() from:
+                 * http://developer.android.com/reference/android/app/Notification.BigTextStyle.html */
+                Notification theNotification = new Notification.Builder(context.getApplicationContext())
+                        .setContentTitle("Alert Notification")
+                        .setContentText("You Need To Eat More...")
+                        .setSmallIcon(R.drawable.ic_warning_black)
+                        .setStyle(new Notification.BigTextStyle()
+                                .bigText(notification))
+                        .build();
 
+                /** post the notification */
+                final NotificationManager notificationManager =
+                        (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(MY_NOTIFICATION_ID, theNotification);
+
+            }
             /** log success */
             Log.i(TAG, "AlarmReceiver.onReceive - Success");
         } catch (Exception e) {

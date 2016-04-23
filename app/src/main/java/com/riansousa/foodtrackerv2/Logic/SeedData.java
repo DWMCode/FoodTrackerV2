@@ -18,7 +18,7 @@ import java.util.Calendar;
 public class SeedData {
 
     private static final String TAG = "FoodTracker";
-    private static final String KEY = "pref_SeedCompleteV10";
+    private static final String KEY = "pref_SeedCompleteV11";
 
     /**
      * Method to create the table structure, preferences and seed data to run the app
@@ -314,11 +314,12 @@ public class SeedData {
                 /** Set the alarm start time */
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
-                calendar.set(Calendar.HOUR_OF_DAY, 9);
-                calendar.set(Calendar.MINUTE, 25);
+                calendar.set(Calendar.HOUR_OF_DAY, 11);
+                calendar.set(Calendar.MINUTE, 13);
 
                 /** set Inexact repeating on a daily basis with wake up enabled */
-                alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+                alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, alarmIntent);
             }
 
             Log.i(TAG, "SeedData.Run() - executed");

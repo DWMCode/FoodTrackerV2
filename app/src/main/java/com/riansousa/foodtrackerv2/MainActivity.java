@@ -296,7 +296,8 @@ public class MainActivity extends AppCompatActivity {
                                  * http://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field
                                  */
                                 android.text.Editable item = editText.getText();
-                                Log.i(TAG, "MainActivity - " + editText.getText() + " was entered as a new item.");
+                                Log.i(TAG, "MainActivity - " + editText.getText() +
+                                        " was entered as a new item.");
                                 /** send item to logic layer for processing */
                                 FoodProfile foodProfile = new FoodProfile();
                                 foodProfile.AddNewItem(getApplicationContext(), item);
@@ -367,7 +368,8 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.show();
 
                 /** instantiate vibrator and vibrate for 300 milli
-                 * research from: http://android.konreu.com/developer-how-to/vibration-examples-for-android-phone-development/
+                 * research from:
+                 * android.konreu.com/developer-how-to/vibration-examples-for-android-phone-development/
                  * */
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(300);
