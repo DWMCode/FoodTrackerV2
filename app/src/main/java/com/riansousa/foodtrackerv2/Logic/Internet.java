@@ -40,9 +40,9 @@ public class Internet {
 
             /** create message */
             if ((netInfo != null && netInfo.isConnectedOrConnecting())) {
-                msg = "TRUE|You are connected to the internet. Details: " + netInfo.toString();
+                msg = "TRUE|You are connected to the internet.";
             } else {
-                msg = "FALSE|You ARE NOT connected to the internet. Details: " + netInfo.toString();
+                msg = "FALSE|You ARE NOT connected to the internet.";
             }
 
             /** log status */
