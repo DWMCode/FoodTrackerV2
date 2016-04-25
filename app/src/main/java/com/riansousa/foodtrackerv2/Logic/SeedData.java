@@ -18,7 +18,9 @@ import java.util.Calendar;
 public class SeedData {
 
     private static final String TAG = "FoodTracker";
-    private static final String KEY = "pref_SeedCompleteV11";
+    private static final String KEY = "pref_SeedCompleteV13";
+    private static final int HOUR_OF_DAY = 13; // 17 for 5:00pm
+    private static final int MINUTE = 05; // 00 for on the hour
 
     /**
      * Method to create the table structure, preferences and seed data to run the app
@@ -314,8 +316,8 @@ public class SeedData {
                 /** Set the alarm start time */
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
-                calendar.set(Calendar.HOUR_OF_DAY, 11);
-                calendar.set(Calendar.MINUTE, 13);
+                calendar.set(Calendar.HOUR_OF_DAY, HOUR_OF_DAY);
+                calendar.set(Calendar.MINUTE, MINUTE);
 
                 /** set Inexact repeating on a daily basis with wake up enabled */
                 alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.riansousa.foodtrackerv2.Logic.ErrorLog;
@@ -202,10 +203,15 @@ public class FoodProfileDetailActivity extends AppCompatActivity {
     private void initMain() {
 
         try {
-            /** instantiate button objects */
+            /** instantiate objects */
             Button updateButton = (Button) findViewById(R.id.btnUpdateFoodItem);
             Button deleteButton = (Button) findViewById(R.id.btnDeleteFoodItem);
             ImageButton lookUpButton = (ImageButton)findViewById(R.id.imgLookUp);
+            ImageView redBucket = (ImageView)findViewById(R.id.ivBucket);
+
+            /** set image view */
+            redBucket.setImageResource(R.drawable.red_bucket);
+            redBucket.setPadding(5,25,5,5);
 
             /*
              * assign values to global variables

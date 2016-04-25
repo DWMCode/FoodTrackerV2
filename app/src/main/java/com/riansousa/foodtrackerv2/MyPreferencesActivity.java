@@ -214,8 +214,8 @@ public class MyPreferencesActivity extends AppCompatActivity {
 
                     /* set values */
                     edit_email.putString("pref_email", _email.getText().toString());
-                    edit_email.putString("pref_phone", _phone.getText().toString());
-                    edit_email.putString("pref_sms", _sms.getText().toString());
+                    edit_phone.putString("pref_phone", _phone.getText().toString());
+                    edit_sms.putString("pref_sms", _sms.getText().toString());
                     edit_maxDailyCalories.putString("pref_maxDailyCalories", _maxDailyCalories.getText().toString());
                     edit_fruitMin.putString("pref_fruitMin", _fruitMin.getText().toString());
                     edit_fruitMax.putString("pref_fruitMax", _fruitMax.getText().toString());
