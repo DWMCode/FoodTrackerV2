@@ -1,6 +1,7 @@
 package com.riansousa.foodtrackerv2.Logic;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -146,6 +147,7 @@ public class MyAlerts {
             int totalCalories = 0;
             String groupMsg = "";
             String totalMsg = "";
+            String longMessage = "";
 
             /** prepare date */
             DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -191,33 +193,52 @@ public class MyAlerts {
             int dailyVegetablesMax = Integer.parseInt(record.get("vegetableMax"));
             int dailyDairyMax = Integer.parseInt(record.get("dairyMax"));
 
+            /** get preferences */
+            final SharedPreferences pref_maxDailyCalories = context.getSharedPreferences("pref_maxDailyCalories", 0);
+            final SharedPreferences pref_fruitMax = context.getSharedPreferences("pref_fruitMax", 0);
+            final SharedPreferences pref_grainMax = context.getSharedPreferences("pref_grainMax", 0);
+            final SharedPreferences pref_proteinMax = context.getSharedPreferences("pref_proteinMax", 0);
+            final SharedPreferences pref_vegetableMax = context.getSharedPreferences("pref_vegetableMax", 0);
+            final SharedPreferences pref_dairyMax = context.getSharedPreferences("pref_dairyMax", 0);
+            final CharSequence value_maxDailyCalories = pref_maxDailyCalories.getString("pref_maxDailyCalories", "");
+            final CharSequence value_fruitMax = pref_fruitMax.getString("pref_fruitMax", "");
+            final CharSequence value_grainMax = pref_grainMax.getString("pref_grainMax", "");
+            final CharSequence value_proteinMax = pref_proteinMax.getString("pref_proteinMax", "");
+            final CharSequence value_vegetableMax = pref_vegetableMax.getString("pref_vegetableMax", "");
+            final CharSequence value_dairyMax = pref_dairyMax.getString("pref_dairyMax", "");
+
             /** compare with daily totals and message */
             if (totalCalories > maxDailyCalories) {
-                totalMsg = totalMsg + "You have exceeded your total daily calories. ";
+                totalMsg = totalMsg + value_maxDailyCalories + " ";
             }
             if (dairyMax > dailyDairyMax) {
                 groupMsg = groupMsg + "dairy, ";
+                longMessage = longMessage + value_dairyMax + " ";
             }
             if (fruitMax > dailyFruitMax) {
                 groupMsg = groupMsg + "fruits, ";
+                longMessage = longMessage + value_fruitMax + " ";
             }
             if (grainMax > dailyGrainMax) {
                 groupMsg = groupMsg + "grains, ";
+                longMessage = longMessage + value_grainMax + " ";
             }
             if (proteinMax > dailyProteinMax) {
                 groupMsg = groupMsg + "protein, ";
+                longMessage = longMessage + value_proteinMax + " ";
             }
             if (vegetableMax > dailyVegetablesMax) {
                 groupMsg = groupMsg + "vegetable, ";
+                longMessage = longMessage + value_vegetableMax + " ";
             }
 
             /** create result message */
             if (totalMsg.length() > 0) {
                 message = message + totalMsg;
             }
-            if (groupMsg.length() > 0) {
+            else if (groupMsg.length() > 0) {
                 groupMsg = groupMsg.substring(0, groupMsg.length()-2);
-                message = message + "You have exceeded your daily allowance for these food groups: " + groupMsg;
+                message = message + "You have exceeded your daily allowance for these food groups: " + groupMsg + ". " + longMessage;
             }
 
         } catch (Exception e) {
@@ -287,27 +308,38 @@ public class MyAlerts {
             int dailyVegetablesMin = Integer.parseInt(record.get("vegetableMin"));
             int dailyDairyMin = Integer.parseInt(record.get("dairyMin"));
 
+            /** get preferences */
+            final SharedPreferences pref_fruitMin = context.getSharedPreferences("pref_fruitMin", 0);
+            final SharedPreferences pref_grainMin = context.getSharedPreferences("pref_grainMin", 0);
+            final SharedPreferences pref_proteinMin = context.getSharedPreferences("pref_proteinMin", 0);
+            final SharedPreferences pref_vegetableMin = context.getSharedPreferences("pref_vegetableMin", 0);
+            final SharedPreferences pref_dairyMin = context.getSharedPreferences("pref_dairyMin", 0);
+            final CharSequence value_fruitMin = pref_fruitMin.getString("pref_fruitMin", "");
+            final CharSequence value_grainMin = pref_grainMin.getString("pref_grainMin", "");
+            final CharSequence value_proteinMin = pref_proteinMin.getString("pref_proteinMin", "");
+            final CharSequence value_vegetableMin = pref_vegetableMin.getString("pref_vegetableMin", "");
+            final CharSequence value_dairyMin = pref_dairyMin.getString("pref_dairyMin", "");
+
             /** compare with daily totals and message */
             if (dairyMin < dailyDairyMin) {
-                groupMsg = groupMsg + "dairy, ";
+                groupMsg = groupMsg + value_dairyMin + " ";
             }
             if (fruitMin < dailyFruitMin) {
-                groupMsg = groupMsg + "fruits, ";
+                groupMsg = groupMsg + value_fruitMin + " ";
             }
             if (grainMin < dailyGrainMin) {
-                groupMsg = groupMsg + "grains, ";
+                groupMsg = groupMsg + value_grainMin + " ";
             }
             if (proteinMin < dailyProteinMin) {
-                groupMsg = groupMsg + "protein, ";
+                groupMsg = groupMsg + value_proteinMin + " ";
             }
             if (vegetableMin < dailyVegetablesMin) {
-                groupMsg = groupMsg + "vegetable, ";
+                groupMsg = groupMsg + value_vegetableMin + " ";
             }
 
             /** create result message */
             if (groupMsg.length() > 0) {
-                groupMsg = groupMsg.substring(0, groupMsg.length()-2);
-                message = message + "You need to eat more of these food groups: " + groupMsg;
+                message = groupMsg;
             }
 
         } catch (Exception e) {

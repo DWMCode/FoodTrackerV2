@@ -18,9 +18,9 @@ import java.util.Calendar;
 public class SeedData {
 
     private static final String TAG = "FoodTracker";
-    private static final String KEY = "pref_SeedCompleteV13";
-    private static final int HOUR_OF_DAY = 13; // 17 for 5:00pm
-    private static final int MINUTE = 05; // 00 for on the hour
+    private static final String KEY = "pref_SeedCompleteV18";
+    private static final int HOUR_OF_DAY = 17; // 17 for 5:00pm
+    private static final int MINUTE = 00; // 00 for on the hour
 
     /**
      * Method to create the table structure, preferences and seed data to run the app
